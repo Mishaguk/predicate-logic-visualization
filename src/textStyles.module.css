@@ -1,0 +1,20 @@
+.textBody {
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-tight);
+  font-size: var(--text-base);
+  font-family: var(--font-main);
+}
+
+.textSecondary {
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-tight);
+  font-size: var(--text-xs);
+  font-family: var(--font-main);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 640px) {
+  .textBody {
+    font-size: var(--text-sm);
+  }
+}

@@ -1,0 +1,9 @@
+html,
+body,
+#root {
+  margin: 0 auto;
+  max-width: 1980px;
+  height: calc(100%);
+  font-family: Arial, sans-serif;
+  text-align: center;
+}

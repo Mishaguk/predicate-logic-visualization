@@ -1,0 +1,5 @@
+.Chip {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-lg);
+  width: fit-content;
+}

@@ -1,0 +1,64 @@
+.modelEditor {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: var(--spacing-sm);
+}
+
+.visualizationContainer {
+  display: flex;
+  flex-grow: 1;
+}
+
+.reactFlow {
+  border: 2px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+}
+
+.panel {
+  padding: var(--spacing-xs);
+  display: flex;
+  flex-direction: column;
+}
+
+.panelResizeHandleHorizontal {
+  width: 2px;
+  cursor: col-resize;
+  background-color: var(--color-border-default);
+}
+.panelResizeHandleVertical {
+  height: 2px;
+  cursor: row-resize;
+  background-color: var(--color-border-default);
+}
+
+.buttonsContainer {
+  padding: var(--spacing-sm);
+  display: flex;
+  gap: var(--spacing-md);
+  border-top: 2px solid var(--color-border-default);
+}
+
+.mobileNavigation {
+  padding: var(--spacing-sm);
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-lg);
+}
+
+.mobileTab {
+  position: relative;
+  padding-bottom: var(--spacing-xs);
+  cursor: pointer;
+  font-size: var(--text-lg);
+}
+
+.mobileTabActive::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: currentColor;
+}

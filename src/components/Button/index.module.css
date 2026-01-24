@@ -1,0 +1,32 @@
+.button {
+  background-color: var(--color-bg);
+  border: none;
+
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+
+  border-radius: var(--radius-lg);
+  transition: 0.3s;
+  box-shadow: var(--shadow-sm);
+}
+
+.button:hover {
+  cursor: pointer;
+  scale: 1.01;
+}
+
+.button:active {
+  scale: 0.95;
+}
+
+.buttonContent {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+@media (max-width: 640px) {
+  .buttonContent {
+    align-items: center;
+    justify-content: center;
+  }
+}

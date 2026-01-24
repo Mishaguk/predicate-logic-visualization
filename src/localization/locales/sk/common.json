@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "examples": "príklady",
+    "example": "príklad",
+    "syntaxGuide": "Príručka syntaxe"
+  },
+  "modelElements": {
+    "universe": "Domena",
+    "compilationErrors": "Chyby kompilácie",
+    "constants": "Konštanty",
+    "predicates": "Predikáty",
+    "functions": "Funkcie"
+  },
+  "actions": {
+    "exportPrologCode": "Exportovať PROLOG kód",
+    "createVisualization": "Vytvoriť vizualizáciu"
+  },
+  "placeholders": {
+    "visualizationEmpty": "Tu sa zobrazí vizualizácia"
+  }
+}

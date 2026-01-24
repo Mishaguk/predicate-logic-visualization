@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "examples": "examples",
+    "example": "example",
+    "syntaxGuide": "Syntax Guide"
+  },
+  "modelElements": {
+    "universe": "Universe",
+    "compilationErrors": "Compilation Errors",
+    "constants": "Constants",
+    "predicates": "Predicates",
+    "functions": "Functions"
+  },
+  "actions": {
+    "exportPrologCode": "Export PROLOG code",
+    "createVisualization": "Create visualization"
+  },
+  "placeholders": {
+    "visualizationEmpty": "Here will be displayed visualization"
+  }
+}

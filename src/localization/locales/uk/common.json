@@ -1,0 +1,21 @@
+{
+  "nav": {
+    "examples": "приклади",
+    "example": "приклад",
+    "syntaxGuide": "Посібник синтаксису"
+  },
+  "modelElements": {
+    "universe": "Універсум",
+    "compilationErrors": "Помилки компіляції",
+    "constants": "Константи",
+    "predicates": "Предикати",
+    "functions": "Функції"
+  },
+  "actions": {
+    "exportPrologCode": "Експортувати PROLOG код",
+    "createVisualization": "Створити візуалізацію"
+  },
+  "placeholders": {
+    "visualizationEmpty": "Тут буде відображено візуалізацію"
+  }
+}

@@ -1,0 +1,12 @@
+.editorFrame {
+  border-radius: 12px;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.editorHost {
+  height: 100%;
+  width: 100%;
+  overflow: visible;
+}

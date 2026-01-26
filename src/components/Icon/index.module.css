@@ -1,0 +1,8 @@
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dark {
+  filter: invert(1) brightness(1.15);
+}

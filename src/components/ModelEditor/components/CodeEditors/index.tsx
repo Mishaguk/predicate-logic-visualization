@@ -9,12 +9,19 @@ import panelStyles from "../../index.module.css";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { Monaco } from "@monaco-editor/react";
+import type { ParseError } from "../../../../types";
+import { useMonacoMarkers } from "../../../../hooks/useMonacoMarkers";
 
 type Props = {
   universeCode: string;
   constantsCode: string;
   predicatesCode: string;
   errors?: string[];
+  syntaxErrors?: {
+    universe: ParseError[];
+    constants: ParseError[];
+    predicates: ParseError[];
+  };
   handlePredicatesCodeChange: (value: string | undefined) => void;
   handleUniverseCodeChange: (value: string | undefined) => void;
   handleConstantsCodeChange: (value: string | undefined) => void;
@@ -32,52 +39,23 @@ const RenderResizeHandle = ({
     <PanelResizeHandle className={panelStyles.panelResizeHandleHorizontal} />
   );
 
-function addHardcodedError(monaco: Monaco, editor: any) {
-  const model = editor.getModel();
-  if (!model) return;
-
-  monaco.editor.setModelMarkers(model, "hardcoded", [
-    {
-      severity: monaco.MarkerSeverity.Error,
-      message: "Hardcoded error (test)",
-      startLineNumber: 1,
-      startColumn: 1,
-      endLineNumber: 1,
-      endColumn: 6,
-    },
-  ]);
-}
-
-function registerHardcodedHover(monaco: Monaco) {
-  monaco.languages.registerHoverProvider("predicateModelDSL", {
-    provideHover(model, position) {
-      return {
-        range: new monaco.Range(
-          1,
-          1,
-          model.getLineCount(),
-          model.getLineMaxColumn(model.getLineCount()),
-        ),
-        contents: [
-          { value: "**Hardcoded error**" },
-          { value: "This is a test hover message." },
-        ],
-      };
-    },
-  });
-}
-
 const CodeEditors = ({
   universeCode,
   constantsCode,
   predicatesCode,
   errors = [],
+  syntaxErrors,
   handlePredicatesCodeChange,
   handleUniverseCodeChange,
   handleConstantsCodeChange,
   isMobile = false,
 }: Props) => {
   const { t } = useTranslation("common");
+  const universeErrors = syntaxErrors?.universe ?? [];
+  const { handleMount: handleUniverseMount } = useMonacoMarkers({
+    owner: "universe",
+    errors: universeErrors,
+  });
 
   return (
     <PanelGroup direction="vertical">
@@ -92,10 +70,9 @@ const CodeEditors = ({
             <CodeEditor
               onChange={handleUniverseCodeChange}
               value={universeCode}
-              onMount={(editor, monaco: Monaco) => {
-                addHardcodedError(monaco, editor);
-                registerHardcodedHover(monaco);
-              }}
+              onMount={(editor, monaco: Monaco) =>
+                handleUniverseMount(editor, monaco)
+              }
             />
           </Panel>
           <RenderResizeHandle

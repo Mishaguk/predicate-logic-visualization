@@ -1,17 +1,27 @@
 import styles from "./index.module.css";
 import textStyles from "../../textStyles.module.css";
 import type { ButtonHTMLAttributes } from "react";
+import Icon from "../Icon";
 type Props = {
   text: string;
   icon?: string;
+  variant?: "white" | "primary";
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ text, icon, ...props }: Props) => {
+const Button = ({ text, icon, variant = "white", ...props }: Props) => {
   return (
-    <button className={styles.button} {...props}>
+    <button
+      className={`${styles.button} ${variant === "primary" ? styles.primary : ""}`}
+      {...props}
+    >
       <div className={styles.buttonContent}>
-        {icon && <img src={icon} />}
-        <span className={textStyles.textBody}>{text}</span>
+        {icon && <Icon src={icon} alt="" />}
+        <span
+          className={textStyles.textBody}
+          style={{ textTransform: "capitalize" }}
+        >
+          {text}
+        </span>
       </div>
     </button>
   );

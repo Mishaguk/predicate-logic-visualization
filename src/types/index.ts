@@ -10,3 +10,17 @@ export type Model = {
 };
 
 export type LanguageCode = "en" | "uk" | "sk";
+
+export type ParseError = {
+  source: "universe" | "constants" | "predicates";
+  message: string;
+  line: number;
+  column: number;
+  endLine?: number;
+  endColumn?: number;
+};
+
+export type ParseResult<T> = {
+  value: T | null;
+  errors: ParseError[];
+};

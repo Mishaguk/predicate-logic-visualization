@@ -5,6 +5,7 @@ import {
   type EdgeProps,
 } from "@xyflow/react";
 import React from "react";
+import styles from "./index.module.css";
 
 const SelfConnectingEdge = (props: EdgeProps) => {
   const {
@@ -42,11 +43,8 @@ const SelfConnectingEdge = (props: EdgeProps) => {
               position: "absolute",
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
               pointerEvents: "all",
-              background: "#fff",
-              padding: "2px 6px",
-              borderRadius: 4,
-              fontSize: 12,
             }}
+            className={styles.label}
           >
             {label}
           </div>

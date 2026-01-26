@@ -9,6 +9,11 @@ export const Identifier = createToken({
   pattern: /[a-zA-Z_][a-zA-Z0-9_]*/,
 });
 
+LCurly.LABEL = "'{'";
+RCurly.LABEL = "'}'";
+Comma.LABEL = "','";
+Identifier.LABEL = "identifier";
+
 export const WhiteSpace = createToken({
   name: "WhiteSpace",
   pattern: /\s+/,

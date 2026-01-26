@@ -1,4 +1,4 @@
-import { CstParser } from "chevrotain";
+import { CstParser, defaultParserErrorProvider, tokenLabel } from "chevrotain";
 import {
   allTokens,
   Comma,
@@ -10,7 +10,13 @@ import {
 
 export class PredicatesParser extends CstParser {
   constructor() {
-    super(allTokens);
+    super(allTokens, {
+      errorMessageProvider: {
+        ...defaultParserErrorProvider,
+        buildMismatchTokenMessage: ({ expected }) =>
+          `Parsing error: ${tokenLabel(expected)} expected`,
+      },
+    });
     this.performSelfAnalysis();
   }
 

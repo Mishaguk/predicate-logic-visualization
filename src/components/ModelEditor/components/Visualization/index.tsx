@@ -17,6 +17,8 @@ import SelfConnectingEdge from "./Edges/SelfConnectingEdge";
 
 import textStyles from "../../../../textStyles.module.css";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "../../../../context/theme/useTheme";
+import styles from "./index.module.css";
 
 const nodeTypes = {
   constant: ConstantNode,
@@ -42,6 +44,7 @@ const Visualization = ({
   onConnect,
 }: Props) => {
   const { t } = useTranslation("common");
+  const { theme } = useTheme();
 
   if (!nodes.length && !edges.length) {
     return (
@@ -62,10 +65,12 @@ const Visualization = ({
 
   return (
     <ReactFlow
+      className={styles.reactflow}
       nodes={nodes}
       edges={edges}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
+      colorMode={theme}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}

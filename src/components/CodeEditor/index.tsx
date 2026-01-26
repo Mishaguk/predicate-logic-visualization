@@ -1,8 +1,17 @@
 import { Editor, type EditorProps } from "@monaco-editor/react";
-import { THEME_NAME } from "./theme";
+import { useEffect } from "react";
+import { useTheme } from "../../context/theme/useTheme";
+import { setMonacoTheme, THEME_DARK, THEME_LIGHT } from "./theme";
 import styles from "./index.module.css";
 
 const CodeEditor = (props: EditorProps) => {
+  const { theme } = useTheme();
+  const themeName = theme === "dark" ? THEME_DARK : THEME_LIGHT;
+
+  useEffect(() => {
+    setMonacoTheme(theme);
+  }, [theme]);
+
   return (
     <div
       className={styles.editorFrame}
@@ -12,7 +21,7 @@ const CodeEditor = (props: EditorProps) => {
     >
       <div className={styles.editorHost}>
         <Editor
-          theme={THEME_NAME}
+          theme={themeName}
           defaultLanguage="predicateModelDSL"
           options={{
             minimap: { enabled: false },

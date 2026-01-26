@@ -3,28 +3,22 @@ import type { LanguageCode } from "../../types";
 import textStyles from "../../textStyles.module.css";
 import styles from "./index.module.css";
 
+const languages: { code: LanguageCode; label: string }[] = [
+  { code: "en", label: "EN" },
+  { code: "uk", label: "UA" },
+  { code: "sk", label: "SK" },
+];
+
 const LanguageSwitch = () => {
   const { i18n } = useTranslation("common");
-  const currentLanguage = i18n.resolvedLanguage ?? i18n.language;
   const handleLanguageChange = (languageCode: LanguageCode) => {
-    try {
-      localStorage.setItem("appLanguage", languageCode);
-    } catch (error) {
-      console.error("Failed to persist language preference.", error);
-    }
     i18n.changeLanguage(languageCode);
   };
-
-  const languages: { code: LanguageCode; label: string }[] = [
-    { code: "en", label: "EN" },
-    { code: "uk", label: "UA" },
-    { code: "sk", label: "SK" },
-  ];
 
   return (
     <div className={styles.switch} role="group" aria-label="Language switch">
       {languages.map((language) => {
-        const isActive = currentLanguage === language.code;
+        const isActive = i18n.language === language.code;
         return (
           <button
             key={language.code}

@@ -20,7 +20,7 @@ type TabIndex = "model" | "visualization";
 const ModelEditor = () => {
   const {
     visualization,
-    code: { states, errors, handlers },
+    code: { states, errors, syntaxErrors, handlers },
   } = useModelEditor();
 
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -74,6 +74,7 @@ const ModelEditor = () => {
               constantsCode={states.constantsCode}
               predicatesCode={states.predicatesCode}
               errors={errors}
+              syntaxErrors={syntaxErrors}
               handlePredicatesCodeChange={handlers.handlePredicatesCodeChange}
               handleUniverseCodeChange={handlers.handleUniverseCodeChange}
               handleConstantsCodeChange={handlers.handleConstantsCodeChange}
@@ -102,12 +103,12 @@ const ModelEditor = () => {
               <div className={styles.buttonsContainer}>
                 <Button
                   text={t("actions.createVisualization")}
-                  style={{ backgroundColor: "#cff7d3" }}
                   onClick={() => visualization.generateVisualization()}
+                  variant="primary"
                 />
                 <Button
                   text={t("actions.exportPrologCode")}
-                  style={{ backgroundColor: "#cff7d3" }}
+                  variant="primary"
                 />
               </div>
             )}

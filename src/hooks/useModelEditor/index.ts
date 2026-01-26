@@ -66,18 +66,22 @@ export const useModelEditor = () => {
     [],
   );
 
-  const model = useMemo(() => {
-    try {
-      return buildModel(universeCode, constantsCode, predicatesCode);
-    } catch {
-      return null;
-    }
-  }, [universeCode, constantsCode, predicatesCode]);
+  const { model, syntaxErrors } = useMemo(
+    () => buildModel(universeCode, constantsCode, predicatesCode),
+    [universeCode, constantsCode, predicatesCode],
+  );
 
   const errors = useMemo(() => {
-    if (!model) return ["Invalid model syntax"];
-    return validateModel(model);
-  }, [model]);
+    const syntaxMessages = [
+      ...syntaxErrors.universe,
+      ...syntaxErrors.constants,
+      ...syntaxErrors.predicates,
+    ].map((error) => error.message);
+
+    const semanticErrors = model ? validateModel(model) : [];
+
+    return [...syntaxMessages, ...semanticErrors];
+  }, [model, syntaxErrors]);
 
   /* N-arity solution: facts as nodes */
   // const getNodes = useCallback((model: Model): Node[] => {
@@ -216,6 +220,7 @@ export const useModelEditor = () => {
         handleConstantsCodeChange,
       },
       errors,
+      syntaxErrors,
     },
     visualization: {
       nodes,

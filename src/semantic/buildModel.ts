@@ -1,17 +1,50 @@
 import { parseConstants } from "../dsl/constants/constants.parse";
 import { parsePredicates } from "../dsl/predicates/predicates.parse";
 import { parseUniverse } from "../dsl/universe/universe.parse";
-import { type Model } from "../types";
+import type { Model, ParseError } from "../types";
+
+type SyntaxErrors = {
+  universe: ParseError[];
+  constants: ParseError[];
+  predicates: ParseError[];
+};
 
 export function buildModel(
   universeCode: string,
   constantsCode: string,
   predicatesCode: string,
-): Model {
+): { model: Model | null; syntaxErrors: SyntaxErrors } {
+  const universeResult = parseUniverse(universeCode);
+  const constantsResult = parseConstants(constantsCode);
+  const predicatesResult = parsePredicates(predicatesCode);
+
+  const syntaxErrors: SyntaxErrors = {
+    universe: universeResult.errors,
+    constants: constantsResult.errors,
+    predicates: predicatesResult.errors,
+  };
+
+  const hasSyntaxErrors =
+    syntaxErrors.universe.length ||
+    syntaxErrors.constants.length ||
+    syntaxErrors.predicates.length;
+
+  if (
+    hasSyntaxErrors ||
+    !universeResult.value ||
+    !constantsResult.value ||
+    !predicatesResult.value
+  ) {
+    return { model: null, syntaxErrors };
+  }
+
   return {
-    universe: parseUniverse(universeCode),
-    constants: parseConstants(constantsCode),
-    predicates: parsePredicates(predicatesCode),
+    model: {
+      universe: universeResult.value,
+      constants: constantsResult.value,
+      predicates: predicatesResult.value,
+    },
+    syntaxErrors,
   };
 }
 

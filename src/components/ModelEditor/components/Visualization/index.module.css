@@ -1,0 +1,19 @@
+.reactflow :global(.react-flow__controls) {
+  background: var(--color-bg);
+  color: var(--text-default);
+  box-shadow: var(--shadow-sm);
+}
+
+.reactflow :global(.react-flow__controls button) {
+  color: var(--text-default);
+  background: var(--color-bg-secondary);
+}
+
+.reactflow :global(.react-flow__edge-text) {
+  fill: var(--text-default);
+}
+
+.reactflow :global(.react-flow__edge-textbg) {
+  fill: var(--color-bg);
+  stroke: var(--color-border-default);
+}

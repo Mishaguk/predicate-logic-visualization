@@ -1,9 +1,15 @@
-import { CstParser } from "chevrotain";
+import { CstParser, defaultParserErrorProvider, tokenLabel } from "chevrotain";
 import { allTokens, Arrow, Identifier } from "./constants.tokens";
 
 export class ConstantsParser extends CstParser {
   constructor() {
-    super(allTokens);
+    super(allTokens, {
+      errorMessageProvider: {
+        ...defaultParserErrorProvider,
+        buildMismatchTokenMessage: ({ expected }) =>
+          `Parsing error: ${tokenLabel(expected)} expected`,
+      },
+    });
     this.performSelfAnalysis();
   }
 

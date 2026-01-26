@@ -10,6 +10,9 @@ export const Identifier = createToken({
   pattern: /[a-zA-Z_][a-zA-Z0-9_]*/,
 });
 
+Arrow.LABEL = "'->'";
+Identifier.LABEL = "identifier";
+
 export const NewLine = createToken({
   name: "NewLine",
   pattern: /\r?\n/,

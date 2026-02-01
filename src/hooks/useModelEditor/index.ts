@@ -31,9 +31,9 @@ export const useModelEditor = () => {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
 
-  const [predicatesCode, setPredicatesCode] = useState("");
+  const [predicatesCode, setPredicatesCode] = useState("Loves(Ann, Peter)");
   const [constantsCode, setConstantsCode] = useState("Ann -> a\nPeter -> b");
-  const [universeCode, setUniverseCode] = useState("{a,b,c}");
+  const [universeCode, setUniverseCode] = useState("People = {a,b,c};");
 
   const handleConstantsCodeChange = useCallback((value: string | undefined) => {
     setConstantsCode(value || "");
@@ -232,3 +232,5 @@ export const useModelEditor = () => {
     },
   };
 };
+
+export type ModelEditorState = ReturnType<typeof useModelEditor>;

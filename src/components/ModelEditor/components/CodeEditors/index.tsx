@@ -9,7 +9,7 @@ import panelStyles from "../../index.module.css";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { Monaco } from "@monaco-editor/react";
-import type { ParseError } from "../../../../types";
+import type { SyntaxError } from "../../../../types";
 import { useMonacoMarkers } from "../../../../hooks/useMonacoMarkers";
 
 type Props = {
@@ -18,9 +18,9 @@ type Props = {
   predicatesCode: string;
   errors?: string[];
   syntaxErrors?: {
-    universe: ParseError[];
-    constants: ParseError[];
-    predicates: ParseError[];
+    universe: SyntaxError[];
+    constants: SyntaxError[];
+    predicates: SyntaxError[];
   };
   handlePredicatesCodeChange: (value: string | undefined) => void;
   handleUniverseCodeChange: (value: string | undefined) => void;
@@ -52,9 +52,19 @@ const CodeEditors = ({
 }: Props) => {
   const { t } = useTranslation("common");
   const universeErrors = syntaxErrors?.universe ?? [];
+  const predicateErrors = syntaxErrors?.predicates ?? [];
+  const constantsErrors = syntaxErrors?.constants ?? [];
   const { handleMount: handleUniverseMount } = useMonacoMarkers({
     owner: "universe",
     errors: universeErrors,
+  });
+  const { handleMount: handleConstantsMount } = useMonacoMarkers({
+    owner: "constants",
+    errors: constantsErrors,
+  });
+  const { handleMount: handlePredicatesMount } = useMonacoMarkers({
+    owner: "predicates",
+    errors: predicateErrors,
   });
 
   return (
@@ -95,30 +105,40 @@ const CodeEditors = ({
               }}
             >
               <div className={styles.errors}>
-                {errors.map((error, index) => (
-                  <div className={styles.error} key={index}>
-                    <div className={styles.errorText}>
-                      <p style={{ display: "block", textAlign: "left" }}>
-                        {error}
-                      </p>
+                {errors.length ? (
+                  errors.map((error, index) => (
+                    <div className={styles.error} key={index}>
+                      <div className={styles.errorText}>
+                        <p style={{ display: "block", textAlign: "left" }}>
+                          {error}
+                        </p>
+                      </div>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 15 15"
+                        fill="none"
+                      >
+                        <path
+                          d="M7.46665 10.1334V7.46672M7.46665 4.80005H7.47332M14.1333 7.46672C14.1333 11.1486 11.1486 14.1334 7.46665 14.1334C3.78476 14.1334 0.799988 11.1486 0.799988 7.46672C0.799988 3.78482 3.78476 0.800049 7.46665 0.800049C11.1486 0.800049 14.1333 3.78482 14.1333 7.46672Z"
+                          stroke="#e22323"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 15 15"
-                      fill="none"
+                  ))
+                ) : (
+                  <div className={styles.noErrors}>
+                    <p
+                      style={{ display: "block", textAlign: "left", margin: 0 }}
                     >
-                      <path
-                        d="M7.46665 10.1334V7.46672M7.46665 4.80005H7.47332M14.1333 7.46672C14.1333 11.1486 11.1486 14.1334 7.46665 14.1334C3.78476 14.1334 0.799988 11.1486 0.799988 7.46672C0.799988 3.78482 3.78476 0.800049 7.46665 0.800049C11.1486 0.800049 14.1333 3.78482 14.1333 7.46672Z"
-                        stroke="#e22323"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                      No errors were found.
+                    </p>
                   </div>
-                ))}
+                )}
               </div>
             </div>
           </Panel>
@@ -139,25 +159,31 @@ const CodeEditors = ({
             <CodeEditor
               onChange={handleConstantsCodeChange}
               value={constantsCode}
+              onMount={(editor, monaco: Monaco) =>
+                handleConstantsMount(editor, monaco)
+              }
             />
           </Panel>
           <RenderResizeHandle
             direction={isMobile ? "vertical" : "horizontal"}
           />
-          <Panel minSize={MIN_PANEL_SIZE}>
-            <PanelGroup direction="vertical">
+          <Panel minSize={MIN_PANEL_SIZE} className={panelStyles.panel}>
+            {/* <PanelGroup direction="vertical">
               <Panel
                 className={panelStyles.panel}
                 defaultSize={defaultSizes.predicates}
                 minSize={MIN_PANEL_SIZE}
-              >
-                <Chip text={t("modelElements.predicates")} />
-                <CodeEditor
-                  onChange={handlePredicatesCodeChange}
-                  value={predicatesCode}
-                />
-              </Panel>
-              <RenderResizeHandle direction="vertical" />
+              > */}
+            <Chip text={t("modelElements.predicates")} />
+            <CodeEditor
+              onChange={handlePredicatesCodeChange}
+              value={predicatesCode}
+              onMount={(editor, monaco: Monaco) =>
+                handlePredicatesMount(editor, monaco)
+              }
+            />
+            {/* </Panel> */}
+            {/* <RenderResizeHandle direction="vertical" />
               <Panel
                 defaultSize={defaultSizes.functions}
                 minSize={MIN_PANEL_SIZE}
@@ -165,8 +191,8 @@ const CodeEditors = ({
               >
                 <Chip text={t("modelElements.functions")} />
                 <CodeEditor />
-              </Panel>
-            </PanelGroup>
+              </Panel> */}
+            {/* </PanelGroup> */}
           </Panel>
         </PanelGroup>
       </Panel>

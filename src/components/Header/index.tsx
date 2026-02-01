@@ -5,7 +5,11 @@ import LanguageSwitch from "../LanguageSwitch";
 import ThemeSwitch from "../ThemeSwitch";
 import styles from "./index.module.css";
 
-const Header = () => {
+type Props = {
+  onOpenExamples: () => void;
+};
+
+const Header = ({ onOpenExamples }: Props) => {
   const { t } = useTranslation("common");
 
   return (
@@ -15,7 +19,11 @@ const Header = () => {
         <ThemeSwitch />
       </div>
       <div className={styles.headerButtons}>
-        <Button text={t("nav.examples")} icon={iconLayers} />
+        <Button
+          text={t("nav.examples")}
+          icon={iconLayers}
+          onClick={onOpenExamples}
+        />
         <Button text={t("nav.syntaxGuide")} icon={iconHelp} />
       </div>
     </div>

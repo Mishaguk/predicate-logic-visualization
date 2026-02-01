@@ -1,12 +1,12 @@
 import { parseConstants } from "../dsl/constants/constants.parse";
 import { parsePredicates } from "../dsl/predicates/predicates.parse";
 import { parseUniverse } from "../dsl/universe/universe.parse";
-import type { Model, ParseError } from "../types";
+import type { Model, SyntaxError } from "../types";
 
 type SyntaxErrors = {
-  universe: ParseError[];
-  constants: ParseError[];
-  predicates: ParseError[];
+  universe: SyntaxError[];
+  constants: SyntaxError[];
+  predicates: SyntaxError[];
 };
 
 export function buildModel(

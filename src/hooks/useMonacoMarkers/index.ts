@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
 import type { Monaco } from "@monaco-editor/react";
 import type { editor as MonacoEditor } from "monaco-editor";
-import type { ParseError } from "../../types";
+import type { SyntaxError } from "../../types";
 
 type UseMonacoMarkersArgs = {
   owner: string;
-  errors: ParseError[];
+  errors: SyntaxError[];
 };
 
 export const useMonacoMarkers = ({ owner, errors }: UseMonacoMarkersArgs) => {

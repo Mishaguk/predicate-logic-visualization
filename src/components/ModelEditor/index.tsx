@@ -6,7 +6,7 @@ import Visualization from "./components/Visualization";
 
 import CodeEditors from "./components/CodeEditors";
 
-import { useModelEditor } from "../../hooks/useModelEditor";
+import type { ModelEditorState } from "../../hooks/useModelEditor";
 import Button from "../Button";
 import { defaultSizes } from "./constants";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
@@ -17,11 +17,8 @@ import { useTranslation } from "react-i18next";
 
 type TabIndex = "model" | "visualization";
 
-const ModelEditor = () => {
-  const {
-    visualization,
-    code: { states, errors, syntaxErrors, handlers },
-  } = useModelEditor();
+const ModelEditor = ({ visualization, code }: ModelEditorState) => {
+  const { states, errors, syntaxErrors, handlers } = code;
 
   const isMobile = useMediaQuery("(max-width: 900px)");
 

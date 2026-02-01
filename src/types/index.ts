@@ -11,8 +11,11 @@ export type Model = {
 
 export type LanguageCode = "en" | "uk" | "sk";
 
-export type ParseError = {
+export type ErrorType = "lex" | "parse";
+
+export type SyntaxError = {
   source: "universe" | "constants" | "predicates";
+  kind: ErrorType;
   message: string;
   line: number;
   column: number;
@@ -22,5 +25,5 @@ export type ParseError = {
 
 export type ParseResult<T> = {
   value: T | null;
-  errors: ParseError[];
+  errors: SyntaxError[];
 };

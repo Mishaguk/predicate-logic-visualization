@@ -2,7 +2,7 @@ import type { Predicate } from "../../types";
 import { PredicatesParser } from "./predicates.parser";
 import { PredicatesLexer } from "./predicates.tokens";
 import { PredicatesVisitor } from "./predicates.visitor";
-import type { ParseError, ParseResult } from "../../types";
+import type { SyntaxError, ParseResult } from "../../types";
 
 // const parser = new PredicatesParser();
 // const productions = parser.getGAstProductions();
@@ -13,8 +13,8 @@ const visitor = new PredicatesVisitor();
 
 const toParseError = (
   error: unknown,
-  source: ParseError["source"],
-): ParseError => {
+  source: SyntaxError["source"],
+): SyntaxError => {
   const anyError = error as {
     message?: string;
     line?: number;
@@ -46,7 +46,7 @@ export function parsePredicates(input: string): ParseResult<Predicate[]> {
   }
 
   const lexResult = PredicatesLexer.tokenize(input);
-  const errors: ParseError[] = [];
+  const errors: SyntaxError[] = [];
 
   if (lexResult.errors.length) {
     errors.push(

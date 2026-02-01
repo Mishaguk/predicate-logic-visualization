@@ -9,6 +9,7 @@ export function registerUniverseLanguage(monaco: Monaco) {
         // Arrow first so it doesn't get split
         [/->/, "operator.arrow"],
 
+        [/=/, "operator"],
         [/\{/, "delimiter.bracket"],
         [/\}/, "delimiter.bracket"],
         [/,/, "delimiter.comma"],

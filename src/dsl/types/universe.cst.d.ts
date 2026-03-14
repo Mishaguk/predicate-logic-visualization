@@ -16,7 +16,7 @@ export interface StatementCstNode extends CstNode {
 
 export type StatementCstChildren = {
   Identifier: IToken[];
-  Equals: IToken[];
+  Iff: IToken[];
   expression: ExpressionCstNode[];
   Semicolon: IToken[];
 };

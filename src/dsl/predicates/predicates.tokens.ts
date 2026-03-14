@@ -10,10 +10,10 @@ export const Identifier = createToken({
   pattern: /[a-zA-Z_][a-zA-Z0-9_]*/,
 });
 
-LBracket.LABEL = "'('";
-RBracket.LABEL = "')'";
-Comma.LABEL = "','";
-Semicolon.LABEL = "';'";
+LBracket.LABEL = "(";
+RBracket.LABEL = ")";
+Comma.LABEL = ",";
+Semicolon.LABEL = ";";
 Identifier.LABEL = "identifier";
 
 export const NewLine = createToken({

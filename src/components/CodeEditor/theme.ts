@@ -19,9 +19,22 @@ export const defineTheme = (monaco: Monaco) => {
     inherit: true,
     rules: [
       { token: "delimiter.bracket", foreground: "#6B7280", fontStyle: "bold" },
-      { token: "identifier", foreground: "#1D4ED8" },
       { token: "delimiter.comma", foreground: "#B45309" },
+      { token: "delimiter.colon", foreground: "#B45309" },
+      { token: "delimiter.LParen", foreground: "#6B7280", fontStyle: "bold" },
+      { token: "delimiter.RParen", foreground: "#6B7280", fontStyle: "bold" },
+
+      { token: "identifier", foreground: "#1D4ED8" },
+      { token: "variable", foreground: "#1D4ED8", fontStyle: "italic" },
+
       { token: "operator.arrow", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.and", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.or", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.not", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.implies", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.iff", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.forall", foreground: "#15803D" },
+      { token: "operator.exists", foreground: "#15803D" },
     ],
     colors: {
       // Background / text
@@ -51,9 +64,20 @@ export const defineTheme = (monaco: Monaco) => {
     inherit: true,
     rules: [
       { token: "delimiter.bracket", foreground: "#94A3B8", fontStyle: "bold" },
-      { token: "identifier", foreground: "#7DD3FC" },
       { token: "delimiter.comma", foreground: "#FBBF24" },
-      { token: "operator.arrow", foreground: "#4ADE80", fontStyle: "bold" },
+      { token: "delimiter.colon", foreground: "#FBBF24" },
+
+      { token: "identifier", foreground: "#7DD3FC" },
+      { token: "variable", foreground: "#7DD3FC", fontStyle: "italic" },
+
+      { token: "operator.arrow", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.and", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.or", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.not", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.implies", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.iff", foreground: "#15803D", fontStyle: "bold" },
+      { token: "operator.forall", foreground: "#15803D" },
+      { token: "operator.exists", foreground: "#15803D" },
     ],
     colors: {
       // Background / text

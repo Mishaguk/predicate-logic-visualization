@@ -10,8 +10,17 @@ export const Identifier = createToken({
   pattern: /[a-zA-Z_][a-zA-Z0-9_]*/,
 });
 
+export const UniverseElement = createToken({
+  name: "UniverseElement",
+  pattern: /[a-zA-Z0-9_]+/,
+  categories: Identifier,
+});
+export const Semicolon = createToken({ name: "Semicolon", pattern: ";" });
+
 Arrow.LABEL = "'->'";
 Identifier.LABEL = "identifier";
+UniverseElement.LABEL = "universe element";
+Semicolon.LABEL = "';'";
 
 export const NewLine = createToken({
   name: "NewLine",
@@ -25,6 +34,13 @@ export const WhiteSpace = createToken({
   group: Lexer.SKIPPED,
 });
 
-export const allTokens = [WhiteSpace, NewLine, Arrow, Identifier];
+export const allTokens = [
+  WhiteSpace,
+  NewLine,
+  Arrow,
+  UniverseElement,
+  Identifier,
+  Semicolon,
+];
 
 export const ConstantsLexer = new Lexer(allTokens);

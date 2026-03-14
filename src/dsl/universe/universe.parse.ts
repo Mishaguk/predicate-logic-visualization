@@ -15,14 +15,13 @@ const visitor = new UniverseVisitor();
 
 export function parseUniverse(input: string): ParseResult<UniverseAst> {
   if (!input.trim()) {
-    return { value: new Set(), errors: [] };
+    return { value: new Map(), errors: [] };
   }
 
   const lexResult = UniverseLexer.tokenize(input);
   const errors: SyntaxError[] = [];
 
   if (lexResult.errors.length) {
-    console.log(lexResult.errors);
     errors.push(
       ...lexResult.errors.map((error) => toLexError(error, "universe")),
     );
@@ -40,7 +39,6 @@ export function parseUniverse(input: string): ParseResult<UniverseAst> {
   }
 
   // CST -> Set<string>
-  console.log(visitor.visit(cst));
 
   return { value: visitor.visit(cst), errors };
 }

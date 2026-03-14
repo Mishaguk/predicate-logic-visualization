@@ -3,6 +3,7 @@ import { PredicatesParser } from "./predicates.parser";
 import { PredicatesLexer } from "./predicates.tokens";
 import { PredicatesVisitor } from "./predicates.visitor";
 import type { SyntaxError, ParseResult } from "../../types";
+import { toParseError } from "../errors";
 
 // const parser = new PredicatesParser();
 // const productions = parser.getGAstProductions();
@@ -10,35 +11,6 @@ import type { SyntaxError, ParseResult } from "../../types";
 
 const parser = new PredicatesParser();
 const visitor = new PredicatesVisitor();
-
-const toParseError = (
-  error: unknown,
-  source: SyntaxError["source"],
-): SyntaxError => {
-  const anyError = error as {
-    message?: string;
-    line?: number;
-    column?: number;
-    token?: {
-      startLine?: number;
-      startColumn?: number;
-      endLine?: number;
-      endColumn?: number;
-    };
-  };
-
-  const line = anyError?.line ?? anyError?.token?.startLine ?? 1;
-  const column = anyError?.column ?? anyError?.token?.startColumn ?? 1;
-
-  return {
-    source,
-    message: anyError?.message ?? "Parsing error",
-    line,
-    column,
-    endLine: anyError?.token?.endLine ?? line,
-    endColumn: anyError?.token?.endColumn ?? column + 1,
-  };
-};
 
 export function parsePredicates(input: string): ParseResult<Predicate[]> {
   if (!input.trim()) {
@@ -68,5 +40,5 @@ export function parsePredicates(input: string): ParseResult<Predicate[]> {
   }
   // CST -> AST
 
-  return { value: visitor.visit(cst), errors: [] };
+  return { value: visitor.visit(cst), errors };
 }

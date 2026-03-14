@@ -16,7 +16,9 @@ export interface MappingCstNode extends CstNode {
 
 export type MappingCstChildren = {
   Identifier: IToken[];
+  UniverseElement: IToken[];
   Arrow: IToken[];
+  Semicolon?: IToken[];
 };
 
 export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {

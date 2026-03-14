@@ -7,7 +7,7 @@ import {
 import {
   allTokens,
   Comma,
-  Equals,
+  Iff,
   Identifier,
   LCurly,
   RCurly,
@@ -19,6 +19,9 @@ export class UniverseParser extends CstParser {
     super(allTokens, {
       errorMessageProvider: {
         ...defaultParserErrorProvider,
+        buildNotAllInputParsedMessage: ({ firstRedundant }) =>
+          `Syntax Error: expected end of statement but found '${firstRedundant.image}'`,
+
         buildMismatchTokenMessage: ({ expected }) =>
           `Parsing error: ' ${tokenLabel(expected)} ' expected`,
       },
@@ -33,7 +36,7 @@ export class UniverseParser extends CstParser {
 
   private statement = this.RULE("statement", () => {
     this.CONSUME(Identifier);
-    this.CONSUME(Equals);
+    this.CONSUME(Iff);
     this.SUBRULE(this.expression);
     this.CONSUME(Semicolon);
   });

@@ -1,1 +1,1 @@
-export type UniverseAst = Set<string>;
+export type UniverseAst = Map<string, string[]>;

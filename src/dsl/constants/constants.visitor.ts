@@ -18,6 +18,6 @@ export class ConstantsVisitor extends BaseConstantsVisitor {
   }
 
   mapping(ctx: MappingCstChildren): [string, string] {
-    return [ctx.Identifier[0].image, ctx.Identifier[1].image];
+    return [ctx.Identifier[0].image, ctx.UniverseElement[0].image];
   }
 }

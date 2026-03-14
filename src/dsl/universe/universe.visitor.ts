@@ -15,24 +15,25 @@ export class UniverseVisitor extends BaseUniverseVisitor {
   }
 
   universe(ctx: UniverseCstChildren) {
-    const aggregatedSymbols = new Set<string>();
+    const assignments = new Map<string, string[]>();
 
     for (const statementNode of ctx.statement ?? []) {
-      const symbolsFromStatement = this.visit(statementNode) as Set<string>;
+      const symbolsFromStatement = [...this.visit(statementNode)];
 
-      for (const symbol of symbolsFromStatement) {
-        aggregatedSymbols.add(symbol);
-      }
+      assignments.set(
+        statementNode.children.Identifier[0].image,
+        symbolsFromStatement,
+      );
     }
 
-    return aggregatedSymbols;
+    return assignments;
   }
 
   statement(ctx: StatementCstChildren) {
-    return this.visit(ctx.expression[0]) as Set<string>;
+    return this.visit(ctx.expression);
   }
 
-  expression(ctx: ExpressionCstChildren) {
+  expression(ctx: ExpressionCstChildren): Set<string> {
     const identifierTokens = ctx.Identifier ?? [];
     return new Set(identifierTokens.map((token) => token.image));
   }

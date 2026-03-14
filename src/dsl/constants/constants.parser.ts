@@ -1,11 +1,19 @@
 import { CstParser, defaultParserErrorProvider, tokenLabel } from "chevrotain";
-import { allTokens, Arrow, Identifier } from "./constants.tokens";
+import {
+  allTokens,
+  Arrow,
+  Identifier,
+  Semicolon,
+  UniverseElement,
+} from "./constants.tokens";
 
 export class ConstantsParser extends CstParser {
   constructor() {
     super(allTokens, {
       errorMessageProvider: {
         ...defaultParserErrorProvider,
+        buildNotAllInputParsedMessage: ({ firstRedundant }) =>
+          `Syntax Error: expected end of statement but found '${firstRedundant.image}'`,
         buildMismatchTokenMessage: ({ expected }) =>
           `Parsing error: ${tokenLabel(expected)} expected`,
       },
@@ -22,6 +30,9 @@ export class ConstantsParser extends CstParser {
   private mapping = this.RULE("mapping", () => {
     this.CONSUME(Identifier);
     this.CONSUME(Arrow);
-    this.CONSUME2(Identifier);
+    this.CONSUME(UniverseElement);
+    this.OPTION(() => {
+      this.CONSUME(Semicolon);
+    });
   });
 }

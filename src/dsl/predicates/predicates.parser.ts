@@ -13,8 +13,12 @@ export class PredicatesParser extends CstParser {
     super(allTokens, {
       errorMessageProvider: {
         ...defaultParserErrorProvider,
+
+        buildNotAllInputParsedMessage: ({ firstRedundant }) =>
+          `Syntax Error: expected end of statement but found '${firstRedundant.image}'`,
+
         buildMismatchTokenMessage: ({ expected }) =>
-          `Parsing error: ${tokenLabel(expected)} expected`,
+          `Parsing error: '${tokenLabel(expected)}' expected`,
       },
     });
     this.performSelfAnalysis();

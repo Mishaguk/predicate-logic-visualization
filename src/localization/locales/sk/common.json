@@ -5,17 +5,78 @@
     "syntaxGuide": "Príručka syntaxe"
   },
   "modelElements": {
-    "universe": "Domena",
+    "universe": "Doména",
     "compilationErrors": "Chyby kompilácie",
     "constants": "Konštanty",
     "predicates": "Predikáty",
-    "functions": "Funkcie"
+    "functions": "Funkcie",
+    "query": "Dotaz",
+    "result": "Výsledok"
   },
   "actions": {
     "exportPrologCode": "Exportovať PROLOG kód",
-    "createVisualization": "Vytvoriť vizualizáciu"
+    "createVisualization": "Vytvoriť vizualizáciu",
+    "runQuery": "Spustiť dotaz"
   },
   "placeholders": {
     "visualizationEmpty": "Tu sa zobrazí vizualizácia"
+  },
+  "guide": {
+    "title": "Príručka syntaxe",
+    "subtitle": "Rýchly prehľad toho, čo je model predikátovej logiky a ako s aplikáciou pracovať.",
+    "overview": {
+      "title": "Globálny prehľad",
+      "text": "Model predikátovej logiky opisuje svet pomocou objektov a vzťahov. V tejto aplikácii tento svet vytvoríte pomocou troch častí: doména, konštanty a predikáty."
+    },
+    "define": {
+      "title": "Ako definovať model",
+      "universe": {
+        "title": "1. Doména",
+        "text": "Uveďte všetky prvky, ktoré môžu existovať v doméne modelu."
+      },
+      "constants": {
+        "title": "2. Konštanty",
+        "text": "Priraďte názvy konštánt používané vo formulách k prvkom domény."
+      },
+      "predicates": {
+        "title": "3. Predikáty",
+        "text": "Definujte fakty a vzťahy pomocou názvov predikátov s argumentmi."
+      }
+    },
+    "query": {
+      "title": "Syntax poľa dotazu",
+      "whatItDoes": "Dotaz overuje, čo vyplýva z vášho modelu. Môže vrátiť true alebo false, alebo viazania premenných (napríklad ktoré hodnoty spĺňajú ?x).",
+      "syntax": {
+        "atom": "Používajte atómy v tvare Predicate(arg1, arg2, ...).",
+        "terms": "Argumenty môžu byť konštanty (ann) alebo premenné (?x).",
+        "logical": "Podporované logické operátory: and, or, not, ->, <->.",
+        "quantifiers": "Podporované kvantifikátory: forAll (\u2200) ?x: ... a exists (\u2203) ?x: ... (podporované sú aj Unicode formy).",
+        "grouping": "Použite zátvorky na zoskupenie výrazov a riadenie priority."
+      },
+      "examples": {
+        "title": "Príklady:"
+      }
+    },
+    "visualization": {
+      "title": "Vizualizácia",
+      "text": "Vizualizácia zobrazuje váš model ako orientovaný graf na základe vyriešených hodnôt domény z faktov predikátov.",
+      "items": {
+        "nodes": "Každý prvok domény je zobrazený ako uzol.",
+        "edges": "Binárne predikáty vytvárajú orientované hrany s názvom predikátu; unárne predikáty sa zobrazujú ako slučky.",
+        "highlight": "Po vykonaní dotazu môžu uzly zobrazovať nájdené viazania premenných."
+      },
+      "exampleAlt": "Ukážka grafovej vizualizácie",
+      "exampleCaption": "Príklad: uzly a pomenované hrany vygenerované z faktov predikátov."
+    },
+    "features": {
+      "title": "Kľúčové funkcie",
+      "items": {
+        "validation": "Syntaktická a sémantická validácia pre doménu, konštanty, predikáty a dotaz.",
+        "visualization": "Grafická vizualizácia konštánt a väzieb predikátov.",
+        "queryExecution": "Vykonávanie dotazov s premennými, logickými operátormi a kvantifikátormi (forAll, exists).",
+        "examples": "Ukážkové predvoľby na rýchle načítanie funkčných modelov a dotazov.",
+        "results": "Zobrazenie výsledkov vo forme booleovskej hodnoty aj väzieb premenných."
+      }
+    }
   }
 }

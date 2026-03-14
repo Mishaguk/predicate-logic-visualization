@@ -27,7 +27,7 @@ export class PredicatesVisitor extends BaseUniverseVisitor {
   predicate(ctx: PredicateCstChildren): Predicate {
     const name = ctx.Identifier[0].image;
     const args = ctx.argument.map((a) => this.visit(a));
-    return { name, args };
+    return { name, args, universeArgs: [] };
   }
   argument(ctx: ArgumentCstChildren) {
     return ctx.Identifier[0].image;

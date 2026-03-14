@@ -9,13 +9,74 @@
     "compilationErrors": "Compilation Errors",
     "constants": "Constants",
     "predicates": "Predicates",
-    "functions": "Functions"
+    "functions": "Functions",
+    "query": "Query",
+    "result": "Result"
   },
   "actions": {
     "exportPrologCode": "Export PROLOG code",
-    "createVisualization": "Create visualization"
+    "createVisualization": "Create visualization",
+    "runQuery": "Run query"
   },
   "placeholders": {
     "visualizationEmpty": "Here will be displayed visualization"
+  },
+  "guide": {
+    "title": "Syntax Guide",
+    "subtitle": "Quick overview of what a predicate-logic model is and how to work with this app.",
+    "overview": {
+      "title": "Global Overview",
+      "text": "A predicate-logic model describes a world using objects and relations. In this app, you build that world with three parts: universe, constants, and predicates."
+    },
+    "define": {
+      "title": "How To Define A Model",
+      "universe": {
+        "title": "1. Universe",
+        "text": "List all elements that can exist in the model domain."
+      },
+      "constants": {
+        "title": "2. Constants",
+        "text": "Map constant names used in formulas to universe elements."
+      },
+      "predicates": {
+        "title": "3. Predicates",
+        "text": "Define facts and relations by using predicate names with arguments."
+      }
+    },
+    "query": {
+      "title": "Query Field Syntax",
+      "whatItDoes": "The query checks what follows from your model. It can return true or false, or bindings for variables (for example, which values satisfy ?x).",
+      "syntax": {
+        "atom": "Use atoms in the form Predicate(arg1, arg2, ...).",
+        "terms": "Arguments can be constants (ann) or variables (?x).",
+        "logical": "Supported logical operators: and, or, not, ->, <->.",
+        "quantifiers": "Supported quantifiers: forAll (\u2200) ?x: ... and exists (\u2203) ?x: ... (Unicode forms are also supported).",
+        "grouping": "Use parentheses to group expressions and control precedence."
+      },
+      "examples": {
+        "title": "Examples:"
+      }
+    },
+    "visualization": {
+      "title": "Visualization",
+      "text": "The visualization renders your model as a directed graph, based on resolved universe values from predicate facts.",
+      "items": {
+        "nodes": "Each universe element is shown as a node.",
+        "edges": "Binary predicates create directed edges labeled by predicate name; unary predicates are shown as self-loops.",
+        "highlight": "After query execution, nodes can show matched variable bindings."
+      },
+      "exampleAlt": "Example graph visualization",
+      "exampleCaption": "Example: nodes and labeled edges generated from predicate facts."
+    },
+    "features": {
+      "title": "Key Features",
+      "items": {
+        "validation": "Syntax and semantic validation for universe, constants, predicates and query.",
+        "visualization": "Graph visualization of constants and predicate links.",
+        "queryExecution": "Query execution with variables, logical operators and quantifiers (forAll, exists).",
+        "examples": "Example presets to quickly load working models and queries.",
+        "results": "Result inspection in both boolean and variable-binding form."
+      }
+    }
   }
 }

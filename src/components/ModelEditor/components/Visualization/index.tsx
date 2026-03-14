@@ -12,13 +12,14 @@ import {
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
-import React from "react";
+
 import SelfConnectingEdge from "./Edges/SelfConnectingEdge";
 
 import textStyles from "../../../../textStyles.module.css";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../../context/theme/useTheme";
 import styles from "./index.module.css";
+import React from "react";
 
 const nodeTypes = {
   constant: ConstantNode,
@@ -36,13 +37,7 @@ type Props = {
   onConnect: (params: Connection) => void;
 };
 
-const Visualization = ({
-  nodes,
-  edges,
-  onEdgesChange,
-  onNodesChange,
-  onConnect,
-}: Props) => {
+const Visualization = ({ nodes, edges, onNodesChange, onConnect }: Props) => {
   const { t } = useTranslation("common");
   const { theme } = useTheme();
 
@@ -72,7 +67,6 @@ const Visualization = ({
       edgeTypes={edgeTypes}
       colorMode={theme}
       onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
       onConnect={onConnect}
       nodesDraggable
       nodesConnectable

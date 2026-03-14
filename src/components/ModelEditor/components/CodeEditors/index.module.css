@@ -1,3 +1,11 @@
+.errorsContainer {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-height: 0;
+}
+
 .errors {
   display: flex;
   flex-direction: column;
@@ -5,7 +13,9 @@
   border-radius: var(--radius-lg);
   padding: var(--spacing-sm);
   gap: var(--spacing-sm);
-  overflow: auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   flex-grow: 1;
 }
 
@@ -36,8 +46,53 @@
   font-size: var(--text-xl);
 }
 
+.queryActionRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.queryResult {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-secondary);
+  padding: 10px 12px;
+  min-width: 124px;
+}
+
+.queryResultLabel {
+  color: var(--color-text-secondary);
+  font-size: var(--text-sm);
+}
+
+.queryResultValue {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  text-transform: lowercase;
+}
+
+.queryResultTrue .queryResultValue {
+  color: var(--color-border-green);
+}
+
+.queryResultFalse .queryResultValue {
+  color: #e22323;
+}
+
+.queryResultEmpty .queryResultValue {
+  color: var(--color-text-secondary);
+}
+
 @media (max-width: 900px) {
   .errorTitle {
     font-size: var(--text-md);
+  }
+
+  .queryActionRow {
+    width: 100%;
+    justify-content: space-between;
   }
 }

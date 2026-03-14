@@ -22,7 +22,7 @@ const CodeEditor = (props: EditorProps) => {
       <div className={styles.editorHost}>
         <Editor
           theme={themeName}
-          defaultLanguage="predicateModelDSL"
+          language="predicateModelDSL"
           options={{
             minimap: { enabled: false },
             overviewRulerLanes: 0,

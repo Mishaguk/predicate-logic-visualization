@@ -6,7 +6,6 @@ import {
   type Connection,
   type EdgeChange,
   type NodeChange,
-  type Node,
   type Edge,
   Controls,
 } from "@xyflow/react";
@@ -20,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../../context/theme/useTheme";
 import styles from "./index.module.css";
 import React from "react";
+import type { ConstantNode as ConstantNodeT } from "../../../../types/visualization";
 
 const nodeTypes = {
   constant: ConstantNode,
@@ -30,9 +30,9 @@ const edgeTypes = {
 };
 
 type Props = {
-  nodes: Node[];
+  nodes: ConstantNodeT[];
   edges: Edge[];
-  onNodesChange: (changes: NodeChange[]) => void;
+  onNodesChange: (changes: NodeChange<ConstantNodeT>[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (params: Connection) => void;
 };

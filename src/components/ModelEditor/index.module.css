@@ -48,9 +48,27 @@
 
 .mobileTab {
   position: relative;
-  padding-bottom: var(--spacing-xs);
+  padding: 0 0 var(--spacing-xs);
   cursor: pointer;
   font-size: var(--text-lg);
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+
+.mobileTabLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.mobileTabIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.mobileTabAlert {
+  color: var(--color-danger, #e22323);
 }
 
 .mobileTabActive::after {
@@ -61,4 +79,89 @@
   bottom: 0;
   height: 1px;
   background-color: currentColor;
+}
+
+.mobileLayout {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.mobileContent {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.mobileEditors {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  min-height: 0;
+  overflow: auto;
+}
+
+.mobileEditorSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  min-height: 240px;
+  border: 2px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-primary, transparent);
+}
+
+.mobileFullSection {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+.mobileVisualizationButtons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.mobileErrorsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
+  min-height: 160px;
+}
+
+.mobileErrorItem {
+  padding: var(--spacing-xs);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+
+.mobileNoErrors {
+  padding: var(--spacing-xs);
+}
+
+.mobilePlaceholder {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  padding: var(--spacing-lg);
+  border: 2px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .mobileEditorSection {
+    min-height: 220px;
+  }
+
+  .mobileEditorSection > :nth-child(2) {
+    min-height: 140px;
+  }
 }

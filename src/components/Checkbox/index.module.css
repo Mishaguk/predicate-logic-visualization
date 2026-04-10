@@ -3,6 +3,7 @@
   align-items: center;
   gap: var(--spacing-xs);
   cursor: pointer;
+  min-width: 0;
 }
 
 .input {
@@ -10,7 +11,7 @@
   height: 16px;
   margin: 0;
   cursor: pointer;
-  accent-color: var(--color-border-green);
+  accent-color: var(--color-bg);
 }
 
 .text {
@@ -20,4 +21,5 @@
   line-height: var(--leading-base);
   color: var(--text-default);
   user-select: none;
+  overflow-wrap: anywhere;
 }

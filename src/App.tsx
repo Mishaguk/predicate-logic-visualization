@@ -10,15 +10,12 @@ import SyntaxGuide from "./components/SyntaxGuide";
 import { registerUniverseLanguage } from "./dsl/universe/language";
 import { useModelEditor } from "./hooks/useModelEditor";
 import { registerQueryLanguage } from "./dsl/query/language";
-import { useMediaQuery } from "./hooks/useMediaQuery";
 
 function App() {
   const modelEditor = useModelEditor();
   const [examplesOpen, setExamplesOpen] = useState(false);
   const [syntaxGuideOpen, setSyntaxGuideOpen] = useState(false);
   const [codePanelHidden, setCodePanelHidden] = useState(false);
-
-  const isSmallScreen = useMediaQuery("(max-width: 900px)");
 
   useEffect(() => {
     loader.init().then((monaco) => {
@@ -35,23 +32,6 @@ function App() {
     modelEditor.code.handlers.handleQueryCodeChange(example.query);
     setExamplesOpen(false);
   };
-
-  if (isSmallScreen) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "24px",
-          boxSizing: "border-box",
-          padding: "16px",
-          height: "100%",
-        }}
-      >
-        Application is not supported on small screens
-      </div>
-    );
-  }
 
   return (
     <div

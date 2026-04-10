@@ -5,6 +5,7 @@
     "syntaxGuide": "Посібник із синтаксису"
   },
   "modelElements": {
+    "model": "Модель",
     "universe": "Універсум",
     "compilationErrors": "Помилки компіляції",
     "constants": "Константи",
@@ -19,7 +20,10 @@
     "runQuery": "Виконати запит"
   },
   "placeholders": {
-    "visualizationEmpty": "Тут буде відображено візуалізацію"
+    "visualizationEmpty": "Тут буде відображено візуалізацію",
+    "noErrorsFound": "Помилок не знайдено.",
+    "mobileCodeEditor": "Заповнювач редактора коду для мобільних",
+    "mobileVisualization": "Заповнювач візуалізації для мобільних"
   },
   "guide": {
     "title": "Посібник із синтаксису",

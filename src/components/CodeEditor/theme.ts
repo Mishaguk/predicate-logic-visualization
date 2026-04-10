@@ -18,44 +18,44 @@ export const defineTheme = (monaco: Monaco) => {
     base: "vs",
     inherit: true,
     rules: [
-      { token: "delimiter.bracket", foreground: "#6B7280", fontStyle: "bold" },
-      { token: "delimiter.comma", foreground: "#B45309" },
-      { token: "delimiter.colon", foreground: "#B45309" },
-      { token: "delimiter.LParen", foreground: "#6B7280", fontStyle: "bold" },
-      { token: "delimiter.RParen", foreground: "#6B7280", fontStyle: "bold" },
+      { token: "delimiter.bracket", foreground: "#667085", fontStyle: "bold" },
+      { token: "delimiter.comma", foreground: "#2a2352" },
+      { token: "delimiter.colon", foreground: "#2a2352" },
+      { token: "delimiter.LParen", foreground: "#667085", fontStyle: "bold" },
+      { token: "delimiter.RParen", foreground: "#667085", fontStyle: "bold" },
 
-      { token: "identifier", foreground: "#1D4ED8" },
-      { token: "variable", foreground: "#1D4ED8", fontStyle: "italic" },
+      { token: "identifier", foreground: "#2a2352" },
+      { token: "variable", foreground: "#2a2352", fontStyle: "italic" },
 
-      { token: "operator.arrow", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.and", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.or", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.not", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.implies", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.iff", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.forall", foreground: "#15803D" },
-      { token: "operator.exists", foreground: "#15803D" },
+      { token: "operator.arrow", foreground: "#22a06b", fontStyle: "bold" },
+      { token: "operator.and", foreground: "#22a06b", fontStyle: "bold" },
+      { token: "operator.or", foreground: "#22a06b", fontStyle: "bold" },
+      { token: "operator.not", foreground: "#22a06b", fontStyle: "bold" },
+      { token: "operator.implies", foreground: "#22a06b", fontStyle: "bold" },
+      { token: "operator.iff", foreground: "#22a06b", fontStyle: "bold" },
+      { token: "operator.forall", foreground: "#22a06b" },
+      { token: "operator.exists", foreground: "#22a06b" },
     ],
     colors: {
       // Background / text
-      "editor.background": "#F6F7F8",
-      "editor.foreground": "#111827",
+      "editor.background": "#f6f7f9",
+      "editor.foreground": "#181a1f",
 
       // Cursor / selection
-      "editorCursor.foreground": "#15803D",
-      "editor.selectionBackground": "#BBF7D0",
-      "editor.inactiveSelectionBackground": "#DCFCE7",
+      "editorCursor.foreground": "#22a06b",
+      "editor.selectionBackground": "#d4ccff",
+      "editor.inactiveSelectionBackground": "#ece9ff",
 
       // Line highlight
-      "editor.lineHighlightBackground": "#F2EEF4",
+      "editor.lineHighlightBackground": "#ece9ff",
 
       // Bracket match
-      "editorBracketMatch.background": "#E5E7EB",
-      "editorBracketMatch.border": "#9CA3AF",
+      "editorBracketMatch.background": "#ece9ff",
+      "editorBracketMatch.border": "#cfd8e3",
 
       // Find
-      "editor.findMatchBackground": "#FEF3C7",
-      "editor.findMatchHighlightBackground": "#FDE68A",
+      "editor.findMatchBackground": "#d4ccff",
+      "editor.findMatchHighlightBackground": "#ece9ff",
     },
   });
 
@@ -63,21 +63,21 @@ export const defineTheme = (monaco: Monaco) => {
     base: "vs-dark",
     inherit: true,
     rules: [
-      { token: "delimiter.bracket", foreground: "#94A3B8", fontStyle: "bold" },
-      { token: "delimiter.comma", foreground: "#FBBF24" },
-      { token: "delimiter.colon", foreground: "#FBBF24" },
+      { token: "delimiter.bracket", foreground: "#9aa4b2", fontStyle: "bold" },
+      { token: "delimiter.comma", foreground: "#f1f0ff" },
+      { token: "delimiter.colon", foreground: "#f1f0ff" },
 
-      { token: "identifier", foreground: "#7DD3FC" },
-      { token: "variable", foreground: "#7DD3FC", fontStyle: "italic" },
+      { token: "identifier", foreground: "#f1f0ff" },
+      { token: "variable", foreground: "#f1f0ff", fontStyle: "italic" },
 
-      { token: "operator.arrow", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.and", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.or", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.not", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.implies", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.iff", foreground: "#15803D", fontStyle: "bold" },
-      { token: "operator.forall", foreground: "#15803D" },
-      { token: "operator.exists", foreground: "#15803D" },
+      { token: "operator.arrow", foreground: "#22c55e", fontStyle: "bold" },
+      { token: "operator.and", foreground: "#22c55e", fontStyle: "bold" },
+      { token: "operator.or", foreground: "#22c55e", fontStyle: "bold" },
+      { token: "operator.not", foreground: "#22c55e", fontStyle: "bold" },
+      { token: "operator.implies", foreground: "#22c55e", fontStyle: "bold" },
+      { token: "operator.iff", foreground: "#22c55e", fontStyle: "bold" },
+      { token: "operator.forall", foreground: "#22c55e" },
+      { token: "operator.exists", foreground: "#22c55e" },
     ],
     colors: {
       // Background / text
@@ -85,20 +85,20 @@ export const defineTheme = (monaco: Monaco) => {
       "editor.foreground": "#E5E7EB",
 
       // Cursor / selection
-      "editorCursor.foreground": "#7EE787",
-      "editor.selectionBackground": "#1F2A3A",
-      "editor.inactiveSelectionBackground": "#16202D",
+      "editorCursor.foreground": "#22c55e",
+      "editor.selectionBackground": "#2b2a45",
+      "editor.inactiveSelectionBackground": "#3a375c",
 
       // Line highlight
-      "editor.lineHighlightBackground": "#1B202B",
+      "editor.lineHighlightBackground": "#1d2430",
 
       // Bracket match
       "editorBracketMatch.background": "#2A3240",
-      "editorBracketMatch.border": "#64748B",
+      "editorBracketMatch.border": "#2A3240",
 
       // Find
-      "editor.findMatchBackground": "#4C3F00",
-      "editor.findMatchHighlightBackground": "#3A2F00",
+      "editor.findMatchBackground": "#2b2a45",
+      "editor.findMatchHighlightBackground": "#3a375c",
     },
   });
 };

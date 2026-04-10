@@ -11,7 +11,7 @@ type Props = {
 const Button = ({ text, icon, variant = "white", ...props }: Props) => {
   return (
     <button
-      className={`${styles.button} ${variant === "primary" ? styles.primary : ""}`}
+      className={`${styles.button} ${variant === "primary" ? styles.primary : styles.white}`}
       {...props}
     >
       <div className={styles.buttonContent}>

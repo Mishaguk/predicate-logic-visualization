@@ -5,13 +5,19 @@ import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 import Visualization from "./components/Visualization";
 
 import CodeEditors from "./components/CodeEditors";
+import MobileLayout from "./components/MobileLayout";
 
 import type { ModelEditorState } from "../../hooks/useModelEditor";
 import Button from "../Button";
-import { defaultSizes } from "./constants";
+import {
+  defaultSizes,
+  ROOT_PANEL_MAX_SIZE,
+  ROOT_PANEL_MIN_SIZE,
+} from "./constants";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 import { useTranslation } from "react-i18next";
+import React from "react";
 
 // type TabIndex = "model" | "visualization";
 
@@ -27,8 +33,34 @@ const ModelEditor = ({
   const { states, errors, syntaxErrors, handlers } = code;
 
   const isMobile = useMediaQuery("(max-width: 900px)");
+  const fitViewTrigger = `${hideModelEditor}`;
 
   const { t } = useTranslation("common");
+
+  if (isMobile) {
+    return (
+      <div className={styles.modelEditor}>
+        <MobileLayout
+          universeCode={states.universeCode}
+          constantsCode={states.constantsCode}
+          predicatesCode={states.predicatesCode}
+          queryCode={states.queryCode}
+          queryResult={states.queryResult}
+          errors={errors}
+          syntaxErrors={syntaxErrors}
+          handlePredicatesCodeChange={handlers.handlePredicatesCodeChange}
+          handleUniverseCodeChange={handlers.handleUniverseCodeChange}
+          handleConstantsCodeChange={handlers.handleConstantsCodeChange}
+          handleQueryCodeChange={handlers.handleQueryCodeChange}
+          handleExecuteQuery={handlers.handleExecuteQuery}
+          handleExportPrologCode={handlers.handleExportPrologCode}
+          visualization={visualization}
+          fitViewTrigger={fitViewTrigger}
+          hideModelEditor={hideModelEditor}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.modelEditor}>
@@ -38,9 +70,11 @@ const ModelEditor = ({
             id="CodeEditors"
             order={1}
             className={styles.panel}
-            defaultSize={isMobile ? 100 : defaultSizes.editors}
+            defaultSize={isMobile ? 60 : defaultSizes.editors}
             style={{ padding: 0 }}
-            minSize={40}
+            minSize={ROOT_PANEL_MIN_SIZE}
+            maxSize={ROOT_PANEL_MAX_SIZE}
+            collapsible={false}
           >
             <CodeEditors
               universeCode={states.universeCode}
@@ -55,7 +89,6 @@ const ModelEditor = ({
               handleConstantsCodeChange={handlers.handleConstantsCodeChange}
               handleQueryCodeChange={handlers.handleQueryCodeChange}
               handleExecuteQuery={handlers.handleExecuteQuery}
-              isMobile={isMobile}
             />
           </Panel>
         )}
@@ -69,7 +102,8 @@ const ModelEditor = ({
           className={`${styles.visualizationContainer} ${styles.panel}`}
           style={{ padding: 0 }}
           defaultSize={hideModelEditor ? 100 : defaultSizes.visualization}
-          minSize={30}
+          minSize={ROOT_PANEL_MIN_SIZE}
+          collapsible={false}
         >
           <Visualization
             edges={visualization.edges}
@@ -77,18 +111,19 @@ const ModelEditor = ({
             onConnect={visualization.onConnect}
             onEdgesChange={visualization.onEdgesChange}
             onNodesChange={visualization.onNodesChange}
+            fitViewTrigger={fitViewTrigger}
           />
 
           {!isMobile && (
             <div className={styles.buttonsContainer}>
               <Button
                 text={t("actions.createVisualization")}
-                onClick={() => visualization.generateVisualization()}
+                onClick={visualization.generateVisualization}
                 variant="primary"
               />
               <Button
                 text={t("actions.exportPrologCode")}
-                onClick={() => handlers.handleExportPrologCode()}
+                onClick={handlers.handleExportPrologCode}
                 variant="primary"
               />
             </div>
@@ -99,4 +134,4 @@ const ModelEditor = ({
   );
 };
 
-export default ModelEditor;
+export default React.memo(ModelEditor);

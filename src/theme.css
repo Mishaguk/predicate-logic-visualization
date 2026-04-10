@@ -1,15 +1,24 @@
 :root {
   /* Base colors */
-  --color-bg: #ffffff;
-  --color-bg-secondary: #f5f5f5;
-  --color-border-default: #d9d9d9;
-  --color-border-green: #009951;
+  --color-bg: #fcfcfd;
+  --color-bg-secondary: #f6f7f9;
+  --color-border-default: #cfd8e3;
+  --color-border-green: #22a06b;
+  --color-primary: #ece9ff;
 
   /* text-colors */
-  --color-text-secondary: #757575;
+  --text-default: #181a1f;
+  --color-text-secondary: #667085;
 
-  --color-primary: #cff7d3;
-  --text-default: #1e1e1e;
+  /* Buttons */
+  --button-bg: #ffffff;
+  --button-text: #181a1f;
+  --button-border: var(--color-border-default);
+  --button-primary-bg: #d4ccff;
+  --button-primary-text: #2a2352;
+  --button-hover-bg: #f8f7ff;
+  --button-primary-hover-bg: #c9bff7;
+
   /* radius */
   --radius-lg: 12px;
   --radius-md: 8px;
@@ -46,13 +55,6 @@
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
-
-  /* Buttons */
-  --button-bg: #ffffff;
-  --button-text: #1e1e1e;
-  --button-border: #d9d9d9;
-  --button-primary-bg: #cff7d3;
-  --button-primary-text: #0f2a18;
 }
 
 :root[data-theme="dark"] {
@@ -80,6 +82,8 @@
   --button-bg: #161b22;
   --button-text: #e5e7eb;
   --button-border: #2a3240;
-  --button-primary-bg: var(--color-primary);
+  --button-primary-bg: #2b2a45;
+  --button-primary-hover-bg: #3a375c;
+  --button-hover-bg: #1d2430;
   --button-primary-text: #f1f0ff;
 }

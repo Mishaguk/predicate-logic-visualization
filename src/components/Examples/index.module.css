@@ -3,6 +3,9 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-border-default) 55%, transparent);
 }
 
 .titleBlock {
@@ -26,10 +29,6 @@
   font-size: var(--text-sm);
 }
 
-.closeButton:hover {
-  background: var(--color-bg-secondary);
-}
-
 .list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -38,26 +37,37 @@
 
 .card {
   text-align: left;
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-default);
+  background: color-mix(
+    in srgb,
+    var(--color-bg-secondary) 82%,
+    var(--color-bg)
+  );
+  border: 1px solid transparent;
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;
   gap: 6px;
+  box-shadow: var(--shadow-sm);
   transition:
     transform 0.15s ease,
     border-color 0.15s ease,
     box-shadow 0.15s ease,
-    background-color 0.15s ease;
+    background-color 0.15s ease,
+    filter 0.15s ease;
   cursor: pointer;
 }
 
 .card:hover {
   transform: translateY(-2px);
-  background: var(--color-bg);
-  border-color: var(--color-border-green);
-  box-shadow: var(--shadow-sm);
+  background: color-mix(in srgb, var(--color-primary) 28%, var(--color-bg));
+  border-color: color-mix(
+    in srgb,
+    var(--color-primary) 60%,
+    var(--color-border-default)
+  );
+  box-shadow: var(--shadow-md);
+  filter: saturate(1.05);
 }
 
 .cardTitle {
@@ -70,23 +80,17 @@
   color: var(--color-text-secondary);
   font-size: var(--text-sm);
   line-height: var(--leading-base);
+  min-height: calc(var(--text-sm) * var(--leading-base) * 2);
 }
 
 .cardAction {
-  color: var(--color-border-green);
+  color: var(--button-primary-text);
   font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
   margin-top: 4px;
 }
 
 @media (max-width: 640px) {
-  .overlay {
-    padding: var(--spacing-md);
-  }
-
-  .modal {
-    padding: var(--spacing-md);
-  }
-
   .list {
     grid-template-columns: 1fr;
   }

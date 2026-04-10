@@ -10,11 +10,17 @@
     color 0.2s ease,
     transform 0.15s ease;
   box-shadow: var(--shadow-sm);
+  width: 100%;
 }
 
-.button:hover {
+.primary:hover {
   cursor: pointer;
-  background-color: var(--color-bg-secondary);
+  background-color: var(--button-primary-hover-bg);
+}
+
+.white:hover {
+  cursor: pointer;
+  background-color: var(--button-hover-bg);
 }
 
 .button:active {
@@ -30,10 +36,6 @@
 .primary {
   background-color: var(--button-primary-bg);
   color: var(--button-primary-text);
-}
-
-.primary:hover {
-  filter: brightness(1.05);
 }
 
 @media (max-width: 640px) {

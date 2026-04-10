@@ -5,6 +5,7 @@
     "syntaxGuide": "Príručka syntaxe"
   },
   "modelElements": {
+    "model": "Model",
     "universe": "Doména",
     "compilationErrors": "Chyby kompilácie",
     "constants": "Konštanty",
@@ -19,7 +20,10 @@
     "runQuery": "Spustiť dotaz"
   },
   "placeholders": {
-    "visualizationEmpty": "Tu sa zobrazí vizualizácia"
+    "visualizationEmpty": "Tu sa zobrazí vizualizácia",
+    "noErrorsFound": "Neboli nájdené žiadne chyby.",
+    "mobileCodeEditor": "Zástupný obsah editora kódu pre mobil",
+    "mobileVisualization": "Zástupný obsah vizualizácie pre mobil"
   },
   "guide": {
     "title": "Príručka syntaxe",

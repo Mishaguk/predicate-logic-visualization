@@ -3,16 +3,16 @@ import { defaultSizes, MIN_PANEL_SIZE } from "../../constants";
 import styles from "./index.module.css";
 
 import Chip from "../../../Chip";
-import CodeEditor from "../../../CodeEditor";
+import ConstantsEditor from "./ConstantsEditor";
+import PredicatesEditor from "./PredicatesEditor";
+import QueryEditor from "./QueryEditor";
+import UniverseEditor from "./UniverseEditor";
 
 import panelStyles from "../../index.module.css";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import type { Monaco } from "@monaco-editor/react";
 import type { Binding, SyntaxError } from "../../../../types";
-import { useMonacoMarkers } from "../../../../hooks/useMonacoMarkers";
-import Button from "../../../Button";
-import { chevronRight } from "../../../../assets";
+import { iconShieldX } from "../../../../assets";
 
 type Props = {
   universeCode: string;
@@ -32,7 +32,6 @@ type Props = {
   handleConstantsCodeChange: (value: string | undefined) => void;
   handleQueryCodeChange: (value: string | undefined) => void;
   handleExecuteQuery: () => void;
-  isMobile?: boolean;
 };
 
 const RenderResizeHandle = ({
@@ -59,7 +58,6 @@ const CodeEditors = ({
   handleConstantsCodeChange,
   handleQueryCodeChange,
   handleExecuteQuery,
-  isMobile = false,
 }: Props) => {
   const { t } = useTranslation("common");
   const universeErrors = syntaxErrors?.universe ?? [];
@@ -67,71 +65,42 @@ const CodeEditors = ({
   const constantsErrors = syntaxErrors?.constants ?? [];
   const queryErrors = syntaxErrors?.query ?? [];
 
-  const { handleMount: handleUniverseMount } = useMonacoMarkers({
-    owner: "universe",
-    errors: universeErrors,
-  });
-  const { handleMount: handleConstantsMount } = useMonacoMarkers({
-    owner: "constants",
-    errors: constantsErrors,
-  });
-  const { handleMount: handlePredicatesMount } = useMonacoMarkers({
-    owner: "predicates",
-    errors: predicateErrors,
-  });
-
-  const { handleMount: handleQueryMount } = useMonacoMarkers({
-    owner: "query",
-    errors: queryErrors,
-  });
-
-  const hasSolutions = Array.isArray(queryResult);
-  const isTruthyResult = hasSolutions ? queryResult.length > 0 : queryResult;
-
-  const formatBinding = (binding: Binding): string => {
-    const pairs = Array.from(binding.entries()).map(
-      ([variable, value]) => `${variable} -> ${value}`,
-    );
-
-    return pairs.join(", ");
-  };
-
-  const queryResultText = (() => {
-    if (queryResult === null) return "-";
-    if (typeof queryResult === "boolean") return queryResult ? "true" : "false";
-    if (!queryResult.length) return "no solutions";
-
-    return queryResult.map((binding) => formatBinding(binding)).join(" | ");
-  })();
-
   return (
     <PanelGroup direction="vertical">
-      <Panel defaultSize={defaultSizes.topContainer} minSize={MIN_PANEL_SIZE}>
-        <PanelGroup direction={isMobile ? "vertical" : "horizontal"}>
+      <Panel
+        defaultSize={defaultSizes.topContainer}
+        minSize={MIN_PANEL_SIZE}
+        maxSize={70}
+        collapsible={false}
+      >
+        <PanelGroup direction="horizontal">
           <Panel
             defaultSize={defaultSizes.universe}
             minSize={MIN_PANEL_SIZE}
+            maxSize={75}
+            collapsible={false}
             className={panelStyles.panel}
+            style={{ gap: "8px", alignItems: "self-start" }}
           >
-            <Chip text={t("modelElements.universe")} />
-            <CodeEditor
-              onChange={handleUniverseCodeChange}
+            <UniverseEditor
               value={universeCode}
-              onMount={(editor, monaco: Monaco) =>
-                handleUniverseMount(editor, monaco)
-              }
+              onChange={handleUniverseCodeChange}
+              syntaxErrors={universeErrors}
             />
           </Panel>
-          <RenderResizeHandle
-            direction={isMobile ? "vertical" : "horizontal"}
-          />
+          <RenderResizeHandle direction="horizontal" />
           <Panel
             defaultSize={defaultSizes.errors}
             minSize={MIN_PANEL_SIZE}
+            maxSize={60}
+            collapsible={false}
             className={panelStyles.panel}
-            style={{ padding: 0 }}
+            style={{ gap: "8px", alignItems: "self-start" }}
           >
-            <Chip text={t("modelElements.compilationErrors")} />
+            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+              <img src={iconShieldX} alt=""></img>
+              <Chip text={t("modelElements.compilationErrors")} />
+            </div>
             {/* // Padding for errors container while not expanding outer panel */}
             <div className={styles.errorsContainer}>
               <div className={styles.errors}>
@@ -165,7 +134,7 @@ const CodeEditors = ({
                     <p
                       style={{ display: "block", textAlign: "left", margin: 0 }}
                     >
-                      No errors were found.
+                      {t("placeholders.noErrorsFound")}
                     </p>
                   </div>
                 )}
@@ -178,76 +147,57 @@ const CodeEditors = ({
       <Panel
         defaultSize={defaultSizes.bottomContainer}
         minSize={MIN_PANEL_SIZE + 10}
+        maxSize={65}
+        collapsible={false}
       >
         <PanelGroup direction="vertical">
-          <Panel minSize={MIN_PANEL_SIZE}>
+          <Panel minSize={MIN_PANEL_SIZE} maxSize={70} collapsible={false}>
             <PanelGroup direction="horizontal">
               <Panel
                 className={panelStyles.panel}
                 defaultSize={defaultSizes.constants}
                 minSize={MIN_PANEL_SIZE}
+                maxSize={65}
+                collapsible={false}
+                style={{ gap: "8px", alignItems: "self-start" }}
               >
-                <Chip text={t("modelElements.constants")} />
-                <CodeEditor
-                  onChange={handleConstantsCodeChange}
+                <ConstantsEditor
                   value={constantsCode}
-                  onMount={(editor, monaco: Monaco) =>
-                    handleConstantsMount(editor, monaco)
-                  }
+                  onChange={handleConstantsCodeChange}
+                  syntaxErrors={constantsErrors}
                 />
               </Panel>
               <RenderResizeHandle direction="horizontal" />
-              <Panel minSize={MIN_PANEL_SIZE} className={panelStyles.panel}>
-                <Chip text={t("modelElements.predicates")} />
-                <CodeEditor
-                  onChange={handlePredicatesCodeChange}
+              <Panel
+                minSize={MIN_PANEL_SIZE}
+                maxSize={70}
+                collapsible={false}
+                className={panelStyles.panel}
+                style={{ gap: "8px", alignItems: "self-start" }}
+              >
+                <PredicatesEditor
                   value={predicatesCode}
-                  onMount={(editor, monaco: Monaco) =>
-                    handlePredicatesMount(editor, monaco)
-                  }
+                  onChange={handlePredicatesCodeChange}
+                  syntaxErrors={predicateErrors}
                 />
               </Panel>
             </PanelGroup>
           </Panel>
           <RenderResizeHandle direction="vertical" />
           <Panel
-            minSize={MIN_PANEL_SIZE}
+            minSize={MIN_PANEL_SIZE + 10}
+            maxSize={60}
+            collapsible={false}
             className={panelStyles.panel}
-            style={{ gap: "12px", alignItems: "self-start" }}
+            style={{ gap: "8px", alignItems: "self-start" }}
           >
-            <Chip text={t("modelElements.query")} />
-            <CodeEditor
-              onChange={handleQueryCodeChange}
+            <QueryEditor
               value={queryCode}
-              language="queryDSL"
-              onMount={(editor, monaco: Monaco) => {
-                handleQueryMount(editor, monaco);
-              }}
+              onChange={handleQueryCodeChange}
+              onExecute={handleExecuteQuery}
+              queryResult={queryResult}
+              syntaxErrors={queryErrors}
             />
-            <div className={styles.queryActionRow}>
-              <Button
-                icon={chevronRight}
-                text={t("actions.runQuery")}
-                variant="primary"
-                onClick={handleExecuteQuery}
-              />
-              <div
-                className={`${styles.queryResult} ${
-                  queryResult === null
-                    ? styles.queryResultEmpty
-                    : isTruthyResult
-                      ? styles.queryResultTrue
-                      : styles.queryResultFalse
-                }`}
-              >
-                <span className={styles.queryResultLabel}>
-                  {t("modelElements.result")}
-                </span>
-                <span className={styles.queryResultValue}>
-                  {queryResultText}
-                </span>
-              </div>
-            </div>
           </Panel>
         </PanelGroup>
       </Panel>

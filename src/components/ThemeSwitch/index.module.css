@@ -1,5 +1,6 @@
 .switch {
   display: inline-flex;
+  justify-content: center;
   align-items: center;
   gap: var(--spacing-xs);
   padding: var(--spacing-xs);

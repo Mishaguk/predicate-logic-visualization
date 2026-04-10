@@ -90,7 +90,7 @@ const Examples = ({ open, onClose, onSelectExample }: Props) => {
             Click a card to paste an example model.
           </p>
         </div>
-        <Button onClick={onClose} text="x" />
+        <Button style={{ width: "auto" }} onClick={onClose} text="x" />
       </div>
       <div className={styles.list}>
         {EXAMPLES.map((example) => (

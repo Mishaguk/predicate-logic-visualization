@@ -21,7 +21,7 @@ const SyntaxGuide = ({ open, onClose }: Props) => {
             <h2 className={styles.title}>{t("guide.title")}</h2>
             <p className={styles.subtitle}>{t("guide.subtitle")}</p>
           </div>
-          <Button onClick={onClose} text="x" />
+          <Button style={{ width: "auto" }} onClick={onClose} text="x" />
         </div>
 
         <div className={styles.content}>

@@ -5,6 +5,7 @@
     "syntaxGuide": "Syntax Guide"
   },
   "modelElements": {
+    "model": "Model",
     "universe": "Universe",
     "compilationErrors": "Compilation Errors",
     "constants": "Constants",
@@ -19,7 +20,10 @@
     "runQuery": "Run query"
   },
   "placeholders": {
-    "visualizationEmpty": "Here will be displayed visualization"
+    "visualizationEmpty": "Visualization will appear here",
+    "noErrorsFound": "No errors were found.",
+    "mobileCodeEditor": "Mobile code editor placeholder",
+    "mobileVisualization": "Mobile visualization placeholder"
   },
   "guide": {
     "title": "Syntax Guide",

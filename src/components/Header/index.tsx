@@ -6,6 +6,7 @@ import ThemeSwitch from "../ThemeSwitch";
 import styles from "./index.module.css";
 import React from "react";
 import CheckBox from "../Checkbox";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 type Props = {
   onOpenExamples: () => void;
@@ -21,19 +22,23 @@ const Header = ({
   onCodePanelHiddenChange,
 }: Props) => {
   const { t } = useTranslation("common");
+  const isMobile = useMediaQuery("(max-width: 900px)");
 
   return (
     <div className={styles.header}>
-      <div className={styles.headerButtons}>
-        <CheckBox
-          isChecked={isCodePanelHidden}
-          onCheck={onCodePanelHiddenChange}
-          text="hide model editor"
-        />
+      <div className={`${styles.headerButtons} ${styles.headerControls}`}>
+        {!isMobile && (
+          <CheckBox
+            isChecked={isCodePanelHidden}
+            onCheck={onCodePanelHiddenChange}
+            text="hide model editor"
+          />
+        )}
+
         <LanguageSwitch />
         <ThemeSwitch />
       </div>
-      <div className={styles.headerButtons}>
+      <div className={`${styles.headerButtons} ${styles.headerActions}`}>
         <Button
           text={t("nav.examples")}
           icon={iconLayers}

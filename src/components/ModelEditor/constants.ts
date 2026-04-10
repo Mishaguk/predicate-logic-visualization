@@ -1,4 +1,6 @@
-export const MIN_PANEL_SIZE = 25;
+export const MIN_PANEL_SIZE = 30;
+export const ROOT_PANEL_MIN_SIZE = 30;
+export const ROOT_PANEL_MAX_SIZE = 70;
 export const defaultSizes = {
   topContainer: 50,
   bottomContainer: 50,

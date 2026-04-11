@@ -1,3 +1,10 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  min-height: 0;
+}
+
 .header {
   display: flex;
   align-items: flex-start;
@@ -33,6 +40,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--spacing-md);
+  max-height: min(65vh, 680px);
+  overflow: auto;
+  min-height: 0;
+  padding-right: 4px;
+  align-items: start;
 }
 
 .card {
@@ -42,8 +54,8 @@
     var(--color-bg-secondary) 82%,
     var(--color-bg)
   );
-  border: 1px solid transparent;
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-md);
   display: flex;
   flex-direction: column;

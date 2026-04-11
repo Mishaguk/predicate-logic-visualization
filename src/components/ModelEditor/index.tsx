@@ -117,14 +117,10 @@ const ModelEditor = ({
           {!isMobile && (
             <div className={styles.buttonsContainer}>
               <Button
-                text={t("actions.createVisualization")}
-                onClick={visualization.generateVisualization}
-                variant="primary"
-              />
-              <Button
                 text={t("actions.exportPrologCode")}
                 onClick={handlers.handleExportPrologCode}
                 variant="primary"
+                style={{ width: "auto" }}
               />
             </div>
           )}

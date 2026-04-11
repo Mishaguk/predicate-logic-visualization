@@ -2,7 +2,8 @@
   "nav": {
     "examples": "приклади",
     "example": "приклад",
-    "syntaxGuide": "Посібник із синтаксису"
+    "syntaxGuide": "Посібник із синтаксису",
+    "menu": "Меню"
   },
   "modelElements": {
     "model": "Модель",

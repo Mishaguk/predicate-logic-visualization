@@ -207,11 +207,6 @@ const MobileLayout = ({
             />
             <div className={styles.mobileVisualizationButtons}>
               <Button
-                text={t("actions.createVisualization")}
-                onClick={visualization.generateVisualization}
-                variant="primary"
-              />
-              <Button
                 text={t("actions.exportPrologCode")}
                 onClick={handleExportPrologCode}
                 variant="primary"

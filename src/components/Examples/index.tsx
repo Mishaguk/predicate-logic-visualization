@@ -83,27 +83,30 @@ const EXAMPLES: Example[] = [
 const Examples = ({ open, onClose, onSelectExample }: Props) => {
   return (
     <Modal open={open} onClose={onClose}>
-      <div className={styles.header}>
-        <div className={styles.titleBlock}>
-          <h2 className={styles.title}>Examples</h2>
-          <p className={styles.subtitle}>
-            Click a card to paste an example model.
-          </p>
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <div className={styles.titleBlock}>
+            <h2 className={styles.title}>Examples</h2>
+            <p className={styles.subtitle}>
+              Click a card to paste an example model.
+            </p>
+          </div>
+          <Button style={{ width: "auto" }} onClick={onClose} text="x" />
         </div>
-        <Button style={{ width: "auto" }} onClick={onClose} text="x" />
-      </div>
-      <div className={styles.list}>
-        {EXAMPLES.map((example) => (
-          <button
-            key={example.title}
-            className={styles.card}
-            onClick={() => onSelectExample?.(example)}
-          >
-            <div className={styles.cardTitle}>{example.title}</div>
-            <div className={styles.cardDescription}>{example.description}</div>
-            <div className={styles.cardAction}>Paste example {"->"}</div>
-          </button>
-        ))}
+
+        <div className={styles.list}>
+          {EXAMPLES.map((example) => (
+            <button
+              key={example.title}
+              className={styles.card}
+              onClick={() => onSelectExample?.(example)}
+            >
+              <div className={styles.cardTitle}>{example.title}</div>
+              <div className={styles.cardDescription}>{example.description}</div>
+              <div className={styles.cardAction}>Paste example {"->"}</div>
+            </button>
+          ))}
+        </div>
       </div>
     </Modal>
   );

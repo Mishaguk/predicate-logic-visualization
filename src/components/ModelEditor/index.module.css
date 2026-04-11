@@ -158,10 +158,6 @@
 
 @media (max-width: 640px) {
   .mobileEditorSection {
-    min-height: 220px;
-  }
-
-  .mobileEditorSection > :nth-child(2) {
-    min-height: 140px;
+    min-height: 440px;
   }
 }

@@ -69,6 +69,7 @@ const QueryEditor = ({
           icon={chevronRight}
           text={t("actions.runQuery")}
           variant="primary"
+          style={{ width: "auto" }}
           onClick={onExecute}
         />
         <div

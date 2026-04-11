@@ -2,7 +2,8 @@
   "nav": {
     "examples": "príklady",
     "example": "príklad",
-    "syntaxGuide": "Príručka syntaxe"
+    "syntaxGuide": "Príručka syntaxe",
+    "menu": "Menu"
   },
   "modelElements": {
     "model": "Model",

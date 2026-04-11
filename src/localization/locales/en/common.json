@@ -2,7 +2,8 @@
   "nav": {
     "examples": "examples",
     "example": "example",
-    "syntaxGuide": "Syntax Guide"
+    "syntaxGuide": "Syntax Guide",
+    "menu": "Menu"
   },
   "modelElements": {
     "model": "Model",

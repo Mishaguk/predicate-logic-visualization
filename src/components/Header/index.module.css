@@ -16,18 +16,36 @@
   gap: var(--spacing-lg);
 }
 
-.headerControls {
-  justify-content: space-between;
-}
-
 .headerActions button {
   width: auto;
+}
+
+.menuToggle {
+  display: none;
+  border: none;
+  background: var(--button-bg);
+  color: var(--button-text);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-sm);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.menuToggle:hover {
+  background: var(--button-hover-bg);
 }
 
 @media (max-width: 900px) {
   .header {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .menuToggle {
+    display: inline-flex;
+    align-self: flex-end;
   }
 
   .headerButtons {

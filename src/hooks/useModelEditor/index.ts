@@ -8,7 +8,7 @@ import {
   type EdgeChange,
   type NodeChange,
 } from "@xyflow/react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Binding, Model, QueryResult } from "../../types/index";
 import { buildModel } from "../../semantic/buildModel";
 import { executeQuery } from "../../semantic/executeQuery";
@@ -272,6 +272,15 @@ export const useModelEditor = () => {
     setNodes((nodesSnapshot) => getNodes(model, nodesSnapshot, queryResult));
     setEdges(edges);
   }, [setNodes, getNodes, setEdges, getEdges, model, errors, queryResult]);
+
+  useEffect(() => {
+    if (!model || errors.length) {
+      return;
+    }
+
+    setNodes((nodesSnapshot) => getNodes(model, nodesSnapshot, queryResult));
+    setEdges(getEdges(model));
+  }, [model, errors.length, getNodes, getEdges, queryResult]);
 
   const handleExecuteQuery = useCallback(() => {
     if (errors.length || !model) {

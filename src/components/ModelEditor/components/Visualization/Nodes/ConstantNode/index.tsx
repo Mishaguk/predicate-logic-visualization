@@ -32,6 +32,7 @@ const ConstantNode = ({ data }: NodeProps<ConstantNode>) => {
       </NodeToolbar>
       <Handle
         type="source"
+        id="source-right"
         position={Position.Right}
         style={{
           background: "none",
@@ -42,7 +43,28 @@ const ConstantNode = ({ data }: NodeProps<ConstantNode>) => {
 
       <Handle
         type="target"
+        id="target-left"
         position={Position.Left}
+        style={{
+          background: "none",
+          border: "none",
+        }}
+      />
+
+      <Handle
+        type="target"
+        id="target-top"
+        position={Position.Top}
+        style={{
+          background: "none",
+          border: "none",
+        }}
+      />
+
+      <Handle
+        type="target"
+        id="target-bottom"
+        position={Position.Bottom}
         style={{
           background: "none",
           border: "none",

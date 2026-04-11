@@ -36,6 +36,11 @@ const edgeStyle = {
   },
 };
 
+const DEFAULT_SOURCE_HANDLE = "source-right";
+const DEFAULT_TARGET_HANDLE = "target-left";
+const CYCLE_TARGET_TOP_HANDLE = "target-top";
+const CYCLE_TARGET_BOTTOM_HANDLE = "target-bottom";
+
 const getPossibleVariablesForValue = (
   value: string,
   bindings: Binding[],
@@ -227,50 +232,84 @@ export const useModelEditor = () => {
     [],
   );
 
-  const getEdges = useCallback((model: Model): Edge[] => {
-    const edges: Edge[] = [];
+  const getEdges = useCallback(
+    (model: Model, currentNodes: ConstantNode[] = []): Edge[] => {
+      const edges: Edge[] = [];
+      const directedPairs = new Set<string>();
+      const nodeYById = new Map(
+        currentNodes.map((node) => [node.id, node.position.y]),
+      );
 
-    model.predicates.forEach(({ name, universeArgs: args }) => {
-      if (args.length === 1) {
-        const source = args[0];
-        const target = args[0];
-
-        edges.push({
-          id: `${source}->${target}-${name}`,
-          source,
-          target,
-          label: name,
-          ...edgeStyle,
-          type: "selfConnecting",
-        });
-        return;
-      }
-
-      if (args.length === 2) {
+      model.predicates.forEach(({ universeArgs: args }) => {
+        if (args.length !== 2) return;
         const [source, target] = args;
+        if (!source || !target || source === target) return;
+        directedPairs.add(`${source}|${target}`);
+      });
 
-        edges.push({
-          id: `${source}->${target}-${name}`,
-          source,
-          target,
-          label: name,
-          ...edgeStyle,
-          ...(source === target && { type: "selfConnecting" }),
-        });
-        return;
-      }
+      model.predicates.forEach(({ name, universeArgs: args }) => {
+        if (args.length === 1) {
+          const source = args[0];
+          const target = args[0];
 
-      // args.length > 2: skip at this moment
-    });
+          edges.push({
+            id: `${source}->${target}-${name}`,
+            source,
+            target,
+            label: name,
+            ...edgeStyle,
+            type: "selfConnecting",
+          });
+          return;
+        }
 
-    return edges;
-  }, []);
+        if (args.length === 2) {
+          const [source, target] = args;
+          const hasReverseEdge =
+            source !== target && directedPairs.has(`${target}|${source}`);
+          const useTopTargetForCycle =
+            hasReverseEdge && source.localeCompare(target) > 0;
+          const sourceY = nodeYById.get(source);
+          const targetY = nodeYById.get(target);
+          const useBottomTarget =
+            useTopTargetForCycle &&
+            sourceY != null &&
+            targetY != null &&
+            sourceY < targetY;
+          const cycleTargetHandle = useBottomTarget
+            ? CYCLE_TARGET_BOTTOM_HANDLE
+            : CYCLE_TARGET_TOP_HANDLE;
+
+          edges.push({
+            id: `${source}->${target}-${name}`,
+            source,
+            target,
+            label: name,
+            sourceHandle: DEFAULT_SOURCE_HANDLE,
+            targetHandle: useTopTargetForCycle
+              ? cycleTargetHandle
+              : DEFAULT_TARGET_HANDLE,
+            ...edgeStyle,
+            ...(source === target && { type: "selfConnecting" }),
+          });
+          return;
+        }
+
+        // args.length > 2: skip at this moment
+      });
+
+      return edges;
+    },
+    [],
+  );
 
   const generateVisualization = useCallback(() => {
     if (!model || errors.length) return;
-    const edges = getEdges(model);
-    setNodes((nodesSnapshot) => getNodes(model, nodesSnapshot, queryResult));
-    setEdges(edges);
+    setNodes((nodesSnapshot) => {
+      const nextNodes = getNodes(model, nodesSnapshot, queryResult);
+      setEdges(getEdges(model, nextNodes));
+      return nextNodes;
+    });
   }, [setNodes, getNodes, setEdges, getEdges, model, errors, queryResult]);
 
   useEffect(() => {
@@ -278,8 +317,11 @@ export const useModelEditor = () => {
       return;
     }
 
-    setNodes((nodesSnapshot) => getNodes(model, nodesSnapshot, queryResult));
-    setEdges(getEdges(model));
+    setNodes((nodesSnapshot) => {
+      const nextNodes = getNodes(model, nodesSnapshot, queryResult);
+      setEdges(getEdges(model, nextNodes));
+      return nextNodes;
+    });
   }, [model, errors.length, getNodes, getEdges, queryResult]);
 
   const handleExecuteQuery = useCallback(() => {
@@ -291,11 +333,14 @@ export const useModelEditor = () => {
     setQueryResult(result.value);
     setNodes((nodesSnapshot) =>
       nodesSnapshot.length
-        ? getNodes(model, nodesSnapshot, result.value)
+        ? (() => {
+            const nextNodes = getNodes(model, nodesSnapshot, result.value);
+            setEdges((edgesSnapshot) =>
+              edgesSnapshot.length ? getEdges(model, nextNodes) : edgesSnapshot,
+            );
+            return nextNodes;
+          })()
         : nodesSnapshot,
-    );
-    setEdges((edgesSnapshot) =>
-      edgesSnapshot.length ? getEdges(model) : edgesSnapshot,
     );
   }, [errors, model, queryCode, getNodes, setNodes, setEdges, getEdges]);
 

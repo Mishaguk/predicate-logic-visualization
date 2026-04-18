@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { iconMoon, iconSun } from "../../assets";
+import { IconMoon, IconSun } from "../../assets";
 import { useTheme } from "../../context/theme/useTheme";
-import Icon from "../Icon";
+
 import styles from "./index.module.css";
 
 const ThemeSwitch = () => {
@@ -9,8 +9,8 @@ const ThemeSwitch = () => {
 
   const options = useMemo(
     () => [
-      { id: "light" as const, label: "Light", icon: iconSun },
-      { id: "dark" as const, label: "Dark", icon: iconMoon },
+      { id: "light" as const, label: "Light", icon: IconSun },
+      { id: "dark" as const, label: "Dark", icon: IconMoon },
     ],
     [],
   );
@@ -27,11 +27,7 @@ const ThemeSwitch = () => {
             onClick={() => setTheme(option.id)}
             aria-pressed={isActive}
           >
-            <Icon
-              src={option.icon}
-              alt={option.label}
-              className={styles.icon}
-            />
+            <option.icon />
           </button>
         );
       })}

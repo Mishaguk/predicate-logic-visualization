@@ -10,7 +10,7 @@ import styles from "../index.module.css";
 
 import type { Binding, SyntaxError } from "../../../../../types";
 import { useMonacoMarkers } from "../../../../../hooks/useMonacoMarkers";
-import { chevronRight, iconCirclePlay } from "../../../../../assets";
+import { IconCIrclePlay, IconChevronRight } from "../../../../../assets";
 
 type Props = {
   value: string;
@@ -55,7 +55,7 @@ const QueryEditor = ({
   return (
     <>
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-        <img src={iconCirclePlay} alt="" />
+        <IconCIrclePlay />
         <Chip text={t("modelElements.query")} />
       </div>
       <CodeEditor
@@ -66,7 +66,7 @@ const QueryEditor = ({
       />
       <div className={styles.queryActionRow}>
         <Button
-          icon={chevronRight}
+          icon={IconChevronRight}
           text={t("actions.runQuery")}
           variant="primary"
           style={{ width: "auto" }}

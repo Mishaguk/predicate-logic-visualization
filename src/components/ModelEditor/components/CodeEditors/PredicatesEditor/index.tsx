@@ -5,7 +5,7 @@ import type { Monaco } from "@monaco-editor/react";
 import Chip from "../../../../Chip";
 import CodeEditor from "../../../../CodeEditor";
 
-import { iconArrowUpDown } from "../../../../../assets";
+import { IconArrowUpDown } from "../../../../../assets";
 import type { SyntaxError } from "../../../../../types";
 import { useMonacoMarkers } from "../../../../../hooks/useMonacoMarkers";
 
@@ -25,7 +25,7 @@ const PredicatesEditor = ({ value, onChange, syntaxErrors = [] }: Props) => {
   return (
     <>
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-        <img src={iconArrowUpDown} alt="" />
+        <IconArrowUpDown />
         <Chip text={t("modelElements.predicates")} />
       </div>
       <CodeEditor

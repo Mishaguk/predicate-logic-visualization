@@ -5,7 +5,7 @@ import type { Monaco } from "@monaco-editor/react";
 import Chip from "../../../../Chip";
 import CodeEditor from "../../../../CodeEditor";
 
-import { iconDatabase } from "../../../../../assets";
+import { IconDatabase } from "../../../../../assets";
 import type { SyntaxError } from "../../../../../types";
 import { useMonacoMarkers } from "../../../../../hooks/useMonacoMarkers";
 
@@ -25,7 +25,7 @@ const ConstantsEditor = ({ value, onChange, syntaxErrors = [] }: Props) => {
   return (
     <>
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-        <img src={iconDatabase} alt="" />
+        <IconDatabase />
         <Chip text={t("modelElements.constants")} />
       </div>
       <CodeEditor

@@ -7,7 +7,7 @@ import CodeEditor from "../../../../CodeEditor";
 import type { SyntaxError } from "../../../../../types";
 import { useMonacoMarkers } from "../../../../../hooks/useMonacoMarkers";
 import type { Monaco } from "@monaco-editor/react";
-import { iconGlobe } from "../../../../../assets";
+import { IconGlobe } from "../../../../../assets";
 
 type Props = {
   value: string;
@@ -25,7 +25,7 @@ const UniverseEditor = ({ value, onChange, syntaxErrors = [] }: Props) => {
   return (
     <>
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-        <img src={iconGlobe} />
+        <IconGlobe />
         <Chip text={t("modelElements.universe")} />
       </div>
       <CodeEditor

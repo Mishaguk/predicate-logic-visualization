@@ -12,7 +12,7 @@ import QueryEditor from "../CodeEditors/QueryEditor";
 import UniverseEditor from "../CodeEditors/UniverseEditor";
 import type { Binding, SyntaxError } from "../../../../types";
 import type { ModelEditorState } from "../../../../hooks/useModelEditor";
-import { circleAlert, iconShieldX } from "../../../../assets";
+import { IconCircleAlert, IconShIeldX } from "../../../../assets";
 
 type Props = {
   universeCode: string;
@@ -90,9 +90,7 @@ const MobileLayout = ({
           >
             <span className={styles.mobileTabLabel}>
               {hasErrors && (
-                <img
-                  src={circleAlert}
-                  alt=""
+                <IconCircleAlert
                   aria-hidden="true"
                   className={styles.mobileTabIcon}
                 />
@@ -151,7 +149,7 @@ const MobileLayout = ({
             className={`${styles.mobileEditorSection} ${styles.mobileFullSection}`}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              <img src={iconShieldX} alt="" />
+              <IconShIeldX />
               <Chip text={t("modelElements.compilationErrors")} />
             </div>
             <div className={codeEditorStyles.errorsContainer}>

@@ -1,4 +1,4 @@
-import { iconHelp, iconLayers, iconMenu } from "../../assets";
+import { IconHelp, IconLayers, IconMenu } from "../../assets";
 import { useTranslation } from "react-i18next";
 import Button from "../Button";
 import LanguageSwitch from "../LanguageSwitch";
@@ -7,7 +7,6 @@ import styles from "./index.module.css";
 import React, { useState } from "react";
 import CheckBox from "../Checkbox";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import Icon from "../Icon";
 
 type Props = {
   onOpenExamples: () => void;
@@ -38,7 +37,7 @@ const Header = ({
           aria-expanded={isMenuOpen}
           onClick={() => setIsMenuOpen((prev) => !prev)}
         >
-          <Icon src={iconMenu} alt={t("nav.menu")} />
+          <IconMenu />
         </button>
       )}
 
@@ -59,12 +58,12 @@ const Header = ({
           <div className={`${styles.headerButtons} ${styles.headerActions}`}>
             <Button
               text={t("nav.examples")}
-              icon={iconLayers}
+              icon={IconLayers}
               onClick={onOpenExamples}
             />
             <Button
               text={t("nav.syntaxGuide")}
-              icon={iconHelp}
+              icon={IconHelp}
               onClick={onOpenSyntaxGuide}
             />
           </div>

@@ -55,6 +55,9 @@
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+  /* Icon adaptation */
+  --svg-icon-filter: none;
 }
 
 :root[data-theme="dark"] {
@@ -86,4 +89,6 @@
   --button-primary-hover-bg: #3a375c;
   --button-hover-bg: #1d2430;
   --button-primary-text: #f1f0ff;
+
+  --svg-icon-filter: brightness(0) invert(0.9);
 }

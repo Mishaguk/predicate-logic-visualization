@@ -12,7 +12,7 @@ import panelStyles from "../../index.module.css";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { Binding, SyntaxError } from "../../../../types";
-import { iconShieldX } from "../../../../assets";
+import { IconShIeldX } from "../../../../assets";
 
 type Props = {
   universeCode: string;
@@ -98,7 +98,7 @@ const CodeEditors = ({
             style={{ gap: "8px", alignItems: "self-start" }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-              <img src={iconShieldX} alt=""></img>
+              <IconShIeldX />
               <Chip text={t("modelElements.compilationErrors")} />
             </div>
             {/* // Padding for errors container while not expanding outer panel */}

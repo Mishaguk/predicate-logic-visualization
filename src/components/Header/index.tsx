@@ -12,14 +12,14 @@ type Props = {
   onOpenExamples: () => void;
   onOpenSyntaxGuide: () => void;
   isCodePanelHidden?: boolean;
-  onCodePanelHiddenChange: (value: boolean) => void;
+  onToggleCodePanel: () => void;
 };
 
 const Header = ({
   onOpenExamples,
   onOpenSyntaxGuide,
   isCodePanelHidden,
-  onCodePanelHiddenChange,
+  onToggleCodePanel,
 }: Props) => {
   const { t } = useTranslation("common");
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -47,8 +47,8 @@ const Header = ({
             {!isMobile && (
               <CheckBox
                 isChecked={isCodePanelHidden}
-                onCheck={onCodePanelHiddenChange}
-                text="hide model editor"
+                onCheck={onToggleCodePanel}
+                text={t("nav.hideModelEditor")}
               />
             )}
 

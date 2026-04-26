@@ -1,4 +1,5 @@
-﻿import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { visualizationExample } from "../../assets";
 import textStyles from "../../textStyles.module.css";
 import Button from "../Button";
@@ -10,55 +11,70 @@ type Props = {
   onClose: () => void;
 };
 
+type TabId =
+  | "overview"
+  | "universe"
+  | "constants"
+  | "predicates"
+  | "query"
+  | "visualization"
+  | "features";
+
+const TAB_ORDER: TabId[] = [
+  "overview",
+  "universe",
+  "constants",
+  "predicates",
+  "query",
+  "visualization",
+  "features",
+];
+
 const SyntaxGuide = ({ open, onClose }: Props) => {
   const { t } = useTranslation("common");
+  const [activeTab, setActiveTab] = useState<TabId>("overview");
 
-  return (
-    <Modal open={open} onClose={onClose}>
-      <div className={textStyles.guideReadable}>
-        <div className={styles.header}>
-          <div className={styles.titleBlock}>
-            <h2 className={styles.title}>{t("guide.title")}</h2>
-            <p className={styles.subtitle}>{t("guide.subtitle")}</p>
-          </div>
-          <Button style={{ width: "auto" }} onClick={onClose} text="x" />
-        </div>
-
-        <div className={styles.content}>
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "overview":
+        return (
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>{t("guide.overview.title")}</h3>
             <p className={styles.text}>{t("guide.overview.text")}</p>
           </section>
-
+        );
+      case "universe":
+        return (
           <section className={styles.section}>
-            <h3 className={styles.sectionTitle}>{t("guide.define.title")}</h3>
-            <div className={styles.item}>
-              <div className={styles.itemTitle}>
-                {t("guide.define.universe.title")}
-              </div>
-              <p className={styles.text}>{t("guide.define.universe.text")}</p>
-              <pre className={styles.code}>People = {"{Ann, Ben, Cara};"}</pre>
-            </div>
-            <div className={styles.item}>
-              <div className={styles.itemTitle}>
-                {t("guide.define.constants.title")}
-              </div>
-              <p className={styles.text}>{t("guide.define.constants.text")}</p>
-              <pre className={styles.code}>
-                ann -&gt; Ann{"\n"}ben -&gt; Ben
-              </pre>
-            </div>
-            <div className={styles.item}>
-              <div className={styles.itemTitle}>
-                {t("guide.define.predicates.title")}
-              </div>
-              <p className={styles.text}>{t("guide.define.predicates.text")}</p>
-              <pre className={styles.code}>
-                Parent(ann, ben){"\n"}Sibling(ben, cara)
-              </pre>
-            </div>
+            <h3 className={styles.sectionTitle}>{t("guide.tabs.universe")}</h3>
+            <p className={styles.text}>{t("guide.define.universe.text")}</p>
+            <pre className={styles.code}>People = {"{Ann, Ben, Cara};"}</pre>
           </section>
-
+        );
+      case "constants":
+        return (
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>{t("guide.tabs.constants")}</h3>
+            <p className={styles.text}>{t("guide.define.constants.text")}</p>
+            <pre className={styles.code}>
+              ann -&gt; Ann{"\n"}ben -&gt; Ben
+            </pre>
+          </section>
+        );
+      case "predicates":
+        return (
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>
+              {t("guide.tabs.predicates")}
+            </h3>
+            <p className={styles.text}>{t("guide.define.predicates.text")}</p>
+            <pre className={styles.code}>
+              Parent(ann, ben){"\n"}Sibling(ben, cara)
+            </pre>
+          </section>
+        );
+      case "query":
+        return (
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>{t("guide.query.title")}</h3>
             <p className={styles.text}>{t("guide.query.whatItDoes")}</p>
@@ -79,7 +95,9 @@ const SyntaxGuide = ({ open, onClose }: Props) => {
               forAll ?x: exists ?y: Parent(?x, ?y)
             </pre>
           </section>
-
+        );
+      case "visualization":
+        return (
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>
               {t("guide.visualization.title")}
@@ -101,7 +119,9 @@ const SyntaxGuide = ({ open, onClose }: Props) => {
               </figcaption>
             </figure>
           </section>
-
+        );
+      case "features":
+        return (
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>{t("guide.features.title")}</h3>
             <ul className={styles.featureList}>
@@ -112,6 +132,45 @@ const SyntaxGuide = ({ open, onClose }: Props) => {
               <li>{t("guide.features.items.results")}</li>
             </ul>
           </section>
+        );
+    }
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <div className={textStyles.guideReadable}>
+        <div className={styles.header}>
+          <div className={styles.titleBlock}>
+            <h2 className={styles.title}>{t("guide.title")}</h2>
+            <p className={styles.subtitle}>{t("guide.subtitle")}</p>
+          </div>
+          <Button style={{ width: "auto" }} onClick={onClose} text="x" />
+        </div>
+
+        <div
+          className={styles.tabs}
+          role="tablist"
+          aria-label={t("guide.title")}
+        >
+          {TAB_ORDER.map((id) => {
+            const isActive = id === activeTab;
+            return (
+              <button
+                key={id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                className={`${styles.tab} ${isActive ? styles.tabActive : ""}`}
+                onClick={() => setActiveTab(id)}
+              >
+                {t(`guide.tabs.${id}`)}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className={styles.content} role="tabpanel">
+          {renderTabContent()}
         </div>
       </div>
     </Modal>

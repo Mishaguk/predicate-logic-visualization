@@ -3,7 +3,8 @@
     "examples": "príklady",
     "example": "príklad",
     "syntaxGuide": "Príručka syntaxe",
-    "menu": "Menu"
+    "menu": "Menu",
+    "hideModelEditor": "skryť editor modelu"
   },
   "modelElements": {
     "model": "Model",
@@ -18,7 +19,15 @@
   "actions": {
     "exportPrologCode": "Exportovať PROLOG kód",
     "createVisualization": "Vytvoriť vizualizáciu",
-    "runQuery": "Spustiť dotaz"
+    "runQuery": "Spustiť dotaz",
+    "copy": "Kopírovať",
+    "downloadPl": "Stiahnuť .pl"
+  },
+  "prologExport": {
+    "title": "Exportovaný PROLOG kód",
+    "subtitle": "Skopírujte úryvok alebo si ho stiahnite ako súbor .pl.",
+    "empty": "Zatiaľ nie je čo exportovať. Opravte syntaktické chyby a skúste to znova.",
+    "copied": "Skopírované!"
   },
   "placeholders": {
     "visualizationEmpty": "Tu sa zobrazí vizualizácia",
@@ -26,9 +35,53 @@
     "mobileCodeEditor": "Zástupný obsah editora kódu pre mobil",
     "mobileVisualization": "Zástupný obsah vizualizácie pre mobil"
   },
+  "examples": {
+    "title": "Príklady",
+    "subtitle": "Kliknite na kartu a vložte ukážkový model.",
+    "pasteAction": "Vložiť príklad",
+    "items": {
+      "friends": {
+        "title": "Priatelia",
+        "description": "Symetrické priateľstvo medzi niekoľkými ľuďmi."
+      },
+      "love": {
+        "title": "Láska",
+        "description": "Jednoduchý binárny predikát s dvoma konštantami."
+      },
+      "parent": {
+        "title": "Rodič",
+        "description": "Malý rodostrom s vzťahom rodiča."
+      },
+      "unaryProperty": {
+        "title": "Unárna vlastnosť",
+        "description": "Jednoargumentový predikát nad malou doménou."
+      },
+      "coursePrerequisites": {
+        "title": "Predpoklady kurzov",
+        "description": "Závislosti medzi kurzmi v študijnom pláne."
+      },
+      "numberChain": {
+        "title": "Číselný reťazec",
+        "description": "Číselná doména s nasledovníkom a paritou."
+      },
+      "colors": {
+        "title": "Farby",
+        "description": "Zoskupenie teplých/studených farieb s komplementárnymi pármi."
+      }
+    }
+  },
   "guide": {
     "title": "Príručka syntaxe",
     "subtitle": "Rýchly prehľad toho, čo je model predikátovej logiky a ako s aplikáciou pracovať.",
+    "tabs": {
+      "overview": "Prehľad",
+      "universe": "Doména",
+      "constants": "Konštanty",
+      "predicates": "Predikáty",
+      "query": "Dotaz",
+      "visualization": "Vizualizácia",
+      "features": "Funkcie"
+    },
     "overview": {
       "title": "Globálny prehľad",
       "text": "Model predikátovej logiky opisuje svet pomocou objektov a vzťahov. V tejto aplikácii tento svet vytvoríte pomocou troch častí: doména, konštanty a predikáty."

@@ -1,6 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import type { Monaco } from "@monaco-editor/react";
+import { languages } from "monaco-editor";
 
 import Chip from "../../../../Chip";
 import CodeEditor from "../../../../CodeEditor";
@@ -10,6 +11,7 @@ import styles from "../index.module.css";
 
 import type { Binding, SyntaxError } from "../../../../../types";
 import { useMonacoMarkers } from "../../../../../hooks/useMonacoMarkers";
+import { useCompletionProvider } from "../../../../../hooks/useCompletionProvider";
 import { IconCIrclePlay, IconChevronRight } from "../../../../../assets";
 
 type Props = {
@@ -18,6 +20,8 @@ type Props = {
   onExecute: () => void;
   queryResult: boolean | Binding[] | null;
   syntaxErrors?: SyntaxError[];
+  predicateNames: string[];
+  constantNames: string[];
 };
 
 const QueryEditor = ({
@@ -26,11 +30,25 @@ const QueryEditor = ({
   onExecute,
   queryResult,
   syntaxErrors = [],
+  predicateNames,
+  constantNames,
 }: Props) => {
   const { t } = useTranslation("common");
-  const { handleMount } = useMonacoMarkers({
+  const { handleMount: handleMarkersMount } = useMonacoMarkers({
     owner: "query",
     errors: syntaxErrors,
+  });
+  const { handleMount: handlePredicateCompletion } = useCompletionProvider({
+    language: "queryDSL",
+    suggestions: predicateNames,
+    triggerCharacters: [],
+    kind: languages.CompletionItemKind.Function,
+  });
+  const { handleMount: handleConstantCompletion } = useCompletionProvider({
+    language: "queryDSL",
+    suggestions: constantNames,
+    triggerCharacters: ["(", ","],
+    kind: languages.CompletionItemKind.Variable,
   });
 
   const hasSolutions = Array.isArray(queryResult);
@@ -62,7 +80,11 @@ const QueryEditor = ({
         onChange={onChange}
         value={value}
         language="queryDSL"
-        onMount={(editor, monaco: Monaco) => handleMount(editor, monaco)}
+        onMount={(editor, monaco: Monaco) => {
+          handleMarkersMount(editor, monaco);
+          handlePredicateCompletion(editor, monaco);
+          handleConstantCompletion(editor, monaco);
+        }}
       />
       <div className={styles.queryActionRow}>
         <Button

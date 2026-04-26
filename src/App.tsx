@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { ImperativePanelHandle } from "react-resizable-panels";
 import "./App.css";
 
 import { loader } from "@monaco-editor/react";
@@ -7,6 +8,7 @@ import Header from "./components/Header";
 import ModelEditor from "./components/ModelEditor";
 import ExamplesModal, { type Example } from "./components/Examples";
 import SyntaxGuide from "./components/SyntaxGuide";
+import PrologExportModal from "./components/PrologExportModal";
 import { registerUniverseLanguage } from "./dsl/universe/language";
 import { useModelEditor } from "./hooks/useModelEditor";
 import { registerQueryLanguage } from "./dsl/query/language";
@@ -16,6 +18,21 @@ function App() {
   const [examplesOpen, setExamplesOpen] = useState(false);
   const [syntaxGuideOpen, setSyntaxGuideOpen] = useState(false);
   const [codePanelHidden, setCodePanelHidden] = useState(false);
+  const [prologExportOpen, setPrologExportOpen] = useState(false);
+  const [prologCode, setPrologCode] = useState<string | null>(null);
+  const codePanelRef = useRef<ImperativePanelHandle | null>(null);
+
+  const handleOpenPrologExport = () => {
+    setPrologCode(modelEditor.code.handlers.getPrologCode());
+    setPrologExportOpen(true);
+  };
+
+  const toggleCodePanel = () => {
+    const panel = codePanelRef.current;
+    if (!panel) return;
+    if (panel.isCollapsed()) panel.expand();
+    else panel.collapse();
+  };
 
   useEffect(() => {
     loader.init().then((monaco) => {
@@ -47,10 +64,17 @@ function App() {
       <Header
         onOpenExamples={() => setExamplesOpen(true)}
         onOpenSyntaxGuide={() => setSyntaxGuideOpen(true)}
-        onCodePanelHiddenChange={(value) => setCodePanelHidden(value)}
+        onToggleCodePanel={toggleCodePanel}
         isCodePanelHidden={codePanelHidden}
       />
-      <ModelEditor {...modelEditor} hideModelEditor={codePanelHidden} />
+      <ModelEditor
+        {...modelEditor}
+        hideModelEditor={codePanelHidden}
+        codePanelRef={codePanelRef}
+        onCodePanelCollapse={() => setCodePanelHidden(true)}
+        onCodePanelExpand={() => setCodePanelHidden(false)}
+        onOpenPrologExport={handleOpenPrologExport}
+      />
       <ExamplesModal
         open={examplesOpen}
         onClose={() => setExamplesOpen(false)}
@@ -59,6 +83,11 @@ function App() {
       <SyntaxGuide
         open={syntaxGuideOpen}
         onClose={() => setSyntaxGuideOpen(false)}
+      />
+      <PrologExportModal
+        open={prologExportOpen}
+        onClose={() => setPrologExportOpen(false)}
+        code={prologCode}
       />
     </div>
   );

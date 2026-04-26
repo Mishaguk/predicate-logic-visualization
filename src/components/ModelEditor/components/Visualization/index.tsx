@@ -1,4 +1,5 @@
 import ConstantNode from "./Nodes/ConstantNode";
+import HyperEdgeNode from "./Nodes/HyperEdge";
 import {
   Background,
   BackgroundVariant,
@@ -20,10 +21,11 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../../context/theme/useTheme";
 import styles from "./index.module.css";
 import React, { useEffect, useMemo } from "react";
-import type { ConstantNode as ConstantNodeT } from "../../../../types/visualization";
+import type { AnyVisualizationNode } from "../../../../types/visualization";
 
 const nodeTypes = {
   constant: ConstantNode,
+  hyperEdge: HyperEdgeNode,
 };
 
 const edgeTypes = {
@@ -31,9 +33,9 @@ const edgeTypes = {
 };
 
 type Props = {
-  nodes: ConstantNodeT[];
+  nodes: AnyVisualizationNode[];
   edges: Edge[];
-  onNodesChange: (changes: NodeChange<ConstantNodeT>[]) => void;
+  onNodesChange: (changes: NodeChange<AnyVisualizationNode>[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (params: Connection) => void;
   fitViewTrigger?: string | number;
@@ -70,20 +72,30 @@ const Visualization = ({
   const { t } = useTranslation("common");
   const { theme } = useTheme();
 
+  // Compute stable string keys from IDs only — positions don't affect these,
+  // so drag events don't change nodeIdStr/edgeIdStr values and downstream
+  // memos (graphKey, fitKey) stay stable during drag.
+  const nodeIdStr = useMemo(
+    () =>
+      nodes
+        .map((n) => n.id)
+        .sort()
+        .join("|"),
+    [nodes],
+  );
+  const edgeIdStr = useMemo(
+    () =>
+      edges
+        .map((e) => e.id)
+        .sort()
+        .join("|"),
+    [edges],
+  );
+
   const graphKey = useMemo(() => {
-    if (!nodes.length && !edges.length) return "";
-
-    const nodeIds = [...nodes]
-      .map((node) => node.id)
-      .sort()
-      .join("|");
-    const edgeIds = [...edges]
-      .map((edge) => edge.id)
-      .sort()
-      .join("|");
-
-    return `${nodeIds}::${edgeIds}`;
-  }, [nodes, edges]);
+    if (!nodeIdStr && !edgeIdStr) return "";
+    return `${nodeIdStr}::${edgeIdStr}`;
+  }, [nodeIdStr, edgeIdStr]);
 
   const fitKey = useMemo(() => {
     if (!graphKey) return "";
@@ -122,7 +134,6 @@ const Visualization = ({
       nodesConnectable
       panOnDrag
       zoomOnScroll
-      fitView
       proOptions={{
         hideAttribution: true,
       }}

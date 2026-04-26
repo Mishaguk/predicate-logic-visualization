@@ -32,7 +32,10 @@ type Props = {
   handleConstantsCodeChange: (value: string | undefined) => void;
   handleQueryCodeChange: (value: string | undefined) => void;
   handleExecuteQuery: () => void;
-  handleExportPrologCode: () => void;
+  onOpenPrologExport?: () => void;
+  constantNames: string[];
+  universeMembers: string[];
+  predicateNames: string[];
   visualization: ModelEditorState["visualization"];
   fitViewTrigger?: string;
   hideModelEditor?: boolean;
@@ -53,10 +56,13 @@ const MobileLayout = ({
   handleConstantsCodeChange,
   handleQueryCodeChange,
   handleExecuteQuery,
-  handleExportPrologCode,
+  onOpenPrologExport,
   visualization,
   fitViewTrigger,
   hideModelEditor = false,
+  constantNames,
+  universeMembers,
+  predicateNames,
 }: Props) => {
   const { t } = useTranslation("common");
   const universeErrors = syntaxErrors?.universe ?? [];
@@ -125,6 +131,7 @@ const MobileLayout = ({
                 value={constantsCode}
                 onChange={handleConstantsCodeChange}
                 syntaxErrors={constantsErrors}
+                universeMembers={universeMembers}
               />
             </div>
             <div className={styles.mobileEditorSection}>
@@ -132,6 +139,7 @@ const MobileLayout = ({
                 value={predicatesCode}
                 onChange={handlePredicatesCodeChange}
                 syntaxErrors={predicateErrors}
+                constantNames={constantNames}
               />
             </div>
             <div className={styles.mobileEditorSection}>
@@ -141,6 +149,8 @@ const MobileLayout = ({
                 onExecute={handleExecuteQuery}
                 queryResult={queryResult}
                 syntaxErrors={queryErrors}
+                predicateNames={predicateNames}
+                constantNames={constantNames}
               />
             </div>
           </div>
@@ -206,7 +216,7 @@ const MobileLayout = ({
             <div className={styles.mobileVisualizationButtons}>
               <Button
                 text={t("actions.exportPrologCode")}
-                onClick={handleExportPrologCode}
+                onClick={onOpenPrologExport}
                 variant="primary"
               />
             </div>

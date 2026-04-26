@@ -6,3 +6,11 @@ export type ConstantNodeData = {
 };
 
 export type ConstantNode = Node<ConstantNodeData, "constant">;
+
+export type HyperEdgeNodeData = {
+  label: string;
+};
+
+export type HyperEdgeNode = Node<HyperEdgeNodeData, "hyperEdge">;
+
+export type AnyVisualizationNode = ConstantNode | HyperEdgeNode;

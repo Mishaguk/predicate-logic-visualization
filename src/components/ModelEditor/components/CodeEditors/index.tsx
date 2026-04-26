@@ -32,6 +32,9 @@ type Props = {
   handleConstantsCodeChange: (value: string | undefined) => void;
   handleQueryCodeChange: (value: string | undefined) => void;
   handleExecuteQuery: () => void;
+  constantNames: string[];
+  universeMembers: string[];
+  predicateNames: string[];
 };
 
 const RenderResizeHandle = ({
@@ -58,6 +61,9 @@ const CodeEditors = ({
   handleConstantsCodeChange,
   handleQueryCodeChange,
   handleExecuteQuery,
+  constantNames,
+  universeMembers,
+  predicateNames,
 }: Props) => {
   const { t } = useTranslation("common");
   const universeErrors = syntaxErrors?.universe ?? [];
@@ -165,6 +171,7 @@ const CodeEditors = ({
                   value={constantsCode}
                   onChange={handleConstantsCodeChange}
                   syntaxErrors={constantsErrors}
+                  universeMembers={universeMembers}
                 />
               </Panel>
               <RenderResizeHandle direction="horizontal" />
@@ -179,6 +186,7 @@ const CodeEditors = ({
                   value={predicatesCode}
                   onChange={handlePredicatesCodeChange}
                   syntaxErrors={predicateErrors}
+                  constantNames={constantNames}
                 />
               </Panel>
             </PanelGroup>
@@ -197,6 +205,8 @@ const CodeEditors = ({
               onExecute={handleExecuteQuery}
               queryResult={queryResult}
               syntaxErrors={queryErrors}
+              predicateNames={predicateNames}
+              constantNames={constantNames}
             />
           </Panel>
         </PanelGroup>

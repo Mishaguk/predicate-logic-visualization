@@ -3,7 +3,8 @@
     "examples": "examples",
     "example": "example",
     "syntaxGuide": "Syntax Guide",
-    "menu": "Menu"
+    "menu": "Menu",
+    "hideModelEditor": "hide model editor"
   },
   "modelElements": {
     "model": "Model",
@@ -18,7 +19,15 @@
   "actions": {
     "exportPrologCode": "Export PROLOG code",
     "createVisualization": "Create visualization",
-    "runQuery": "Run query"
+    "runQuery": "Run query",
+    "copy": "Copy",
+    "downloadPl": "Download .pl"
+  },
+  "prologExport": {
+    "title": "Exported PROLOG Code",
+    "subtitle": "Copy the snippet or download it as a .pl file.",
+    "empty": "Nothing to export yet. Fix syntax errors and try again.",
+    "copied": "Copied!"
   },
   "placeholders": {
     "visualizationEmpty": "Visualization will appear here",
@@ -26,9 +35,53 @@
     "mobileCodeEditor": "Mobile code editor placeholder",
     "mobileVisualization": "Mobile visualization placeholder"
   },
+  "examples": {
+    "title": "Examples",
+    "subtitle": "Click a card to paste an example model.",
+    "pasteAction": "Paste example",
+    "items": {
+      "friends": {
+        "title": "Friends",
+        "description": "Symmetric friendship between a few people."
+      },
+      "love": {
+        "title": "Love",
+        "description": "Simple binary predicate with two constants."
+      },
+      "parent": {
+        "title": "Parent",
+        "description": "Small family tree with a parent relation."
+      },
+      "unaryProperty": {
+        "title": "Unary Property",
+        "description": "Single-argument predicate over a small universe."
+      },
+      "coursePrerequisites": {
+        "title": "Course Prerequisites",
+        "description": "Dependencies between courses in a study plan."
+      },
+      "numberChain": {
+        "title": "Number Chain",
+        "description": "Numeric-like domain with successor and parity."
+      },
+      "colors": {
+        "title": "Colors",
+        "description": "Warm/cool color grouping with complement pairs."
+      }
+    }
+  },
   "guide": {
     "title": "Syntax Guide",
     "subtitle": "Quick overview of what a predicate-logic model is and how to work with this app.",
+    "tabs": {
+      "overview": "Overview",
+      "universe": "Universe",
+      "constants": "Constants",
+      "predicates": "Predicates",
+      "query": "Query",
+      "visualization": "Visualization",
+      "features": "Features"
+    },
     "overview": {
       "title": "Global Overview",
       "text": "A predicate-logic model describes a world using objects and relations. In this app, you build that world with three parts: universe, constants, and predicates."

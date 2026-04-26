@@ -1,10 +1,10 @@
-﻿import styles from "./index.module.css";
+import { useTranslation } from "react-i18next";
+import styles from "./index.module.css";
 import Button from "../Button";
 import Modal from "../Modal";
 
 export type Example = {
-  title: string;
-  description: string;
+  titleKey: string;
   universe: string;
   constants: string;
   predicates: string;
@@ -19,24 +19,21 @@ type Props = {
 
 const EXAMPLES: Example[] = [
   {
-    title: "Friends",
-    description: "Symmetric friendship between a few people.",
+    titleKey: "friends",
     universe: "Humans = {Ann, Boris, Eve};",
     constants: "ann -> Ann\nboris -> Boris\neve -> Eve",
     predicates: "Friend(ann, boris)\nFriend(boris, ann)\nFriend(ann, eve)",
     query: "Friend(?x, ann) and Friend(ann, ?x)",
   },
   {
-    title: "Love",
-    description: "Simple binary predicate with two constants.",
+    titleKey: "love",
     universe: "Humans = {Eve, Peter};",
     constants: "eve -> Eve\npeter -> Peter",
     predicates: "Loves(eve, peter)\nLoves(peter, eve)",
     query: "∀ ?x: ∃ ?y: Loves(?x, ?y)",
   },
   {
-    title: "Parent",
-    description: "Small family tree with a parent relation.",
+    titleKey: "parent",
     universe: "People = {Ann, Ben, Cara, Dan};",
     constants: "ann -> Ann\nben -> Ben\ncara -> Cara\ndan -> Dan",
     predicates:
@@ -44,16 +41,14 @@ const EXAMPLES: Example[] = [
     query: "Parent(?x, dan)",
   },
   {
-    title: "Unary Property",
-    description: "Single-argument predicate over a small universe.",
+    titleKey: "unaryProperty",
     universe: "Animals = {Cat, Dog, Bird};",
     constants: "cat -> Cat\ndog -> Dog\nbird -> Bird",
     predicates: "Pet(cat)\nPet(dog)",
     query: "Pet(?x) and not Pet(bird)",
   },
   {
-    title: "Course Prerequisites",
-    description: "Dependencies between courses in a study plan.",
+    titleKey: "coursePrerequisites",
     universe: "Courses = {Calc1, Calc2, Logic, AI};",
     constants: "calc1 -> Calc1\ncalc2 -> Calc2\nlogic -> Logic\nai -> AI",
     predicates:
@@ -61,16 +56,14 @@ const EXAMPLES: Example[] = [
     query: "Prereq(?x, ai) and not Core(?x)",
   },
   {
-    title: "Number Chain",
-    description: "Numeric-like domain with successor and parity.",
+    titleKey: "numberChain",
     universe: "Numbers = {0, 1, 2, 3};",
     constants: "n0 -> 0\nn1 -> 1\nn2 -> 2\nn3 -> 3",
     predicates: "Succ(n0, n1)\nSucc(n1, n2)\nSucc(n2, n3)\nEven(n0)\nEven(n2)",
     query: "∃ ?x: Even(?x) and Succ(?x, n3)",
   },
   {
-    title: "Colors",
-    description: "Warm/cool color grouping with complement pairs.",
+    titleKey: "colors",
     universe: "Colors = {Red, Blue, Yellow, Green, Orange, Purple};",
     constants:
       "red -> Red\nblue -> Blue\nyellow -> Yellow\ngreen -> Green\norange -> Orange\npurple -> Purple",
@@ -81,15 +74,15 @@ const EXAMPLES: Example[] = [
 ];
 
 const Examples = ({ open, onClose, onSelectExample }: Props) => {
+  const { t } = useTranslation("common");
+
   return (
     <Modal open={open} onClose={onClose}>
       <div className={styles.content}>
         <div className={styles.header}>
           <div className={styles.titleBlock}>
-            <h2 className={styles.title}>Examples</h2>
-            <p className={styles.subtitle}>
-              Click a card to paste an example model.
-            </p>
+            <h2 className={styles.title}>{t("examples.title")}</h2>
+            <p className={styles.subtitle}>{t("examples.subtitle")}</p>
           </div>
           <Button style={{ width: "auto" }} onClick={onClose} text="x" />
         </div>
@@ -97,13 +90,19 @@ const Examples = ({ open, onClose, onSelectExample }: Props) => {
         <div className={styles.list}>
           {EXAMPLES.map((example) => (
             <button
-              key={example.title}
+              key={example.titleKey}
               className={styles.card}
               onClick={() => onSelectExample?.(example)}
             >
-              <div className={styles.cardTitle}>{example.title}</div>
-              <div className={styles.cardDescription}>{example.description}</div>
-              <div className={styles.cardAction}>Paste example {"->"}</div>
+              <div className={styles.cardTitle}>
+                {t(`examples.items.${example.titleKey}.title`)}
+              </div>
+              <div className={styles.cardDescription}>
+                {t(`examples.items.${example.titleKey}.description`)}
+              </div>
+              <div className={styles.cardAction}>
+                {t("examples.pasteAction")} {"->"}
+              </div>
             </button>
           ))}
         </div>

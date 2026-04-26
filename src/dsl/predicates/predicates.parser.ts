@@ -41,7 +41,7 @@ export class PredicatesParser extends CstParser {
     this.CONSUME(Identifier);
     this.CONSUME(LBracket);
     this.SUBRULE(this.argument);
-    this.OPTION(() => {
+    this.MANY(() => {
       this.CONSUME(Comma);
       this.SUBRULE2(this.argument);
     });

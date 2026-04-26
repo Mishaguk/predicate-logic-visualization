@@ -13,7 +13,7 @@ import {
   type EdgeChange,
   type NodeChange,
 } from "@xyflow/react";
-import type { ConstantNode } from "../../types/visualization";
+import type { AnyVisualizationNode } from "../../types/visualization";
 
 export const useModelEditor = () => {
   const code = useCodeState();
@@ -51,6 +51,22 @@ export const useModelEditor = () => {
     return [...syntaxMessages, ...semanticErrors];
   }, [syntaxErrors, semanticErrors]);
 
+  const constantNames = useMemo(
+    () => (model ? [...model.constants.keys()] : []),
+    [model],
+  );
+
+  const universeMembers = useMemo(
+    () => (model ? [...model.universe.values()].flat() : []),
+    [model],
+  );
+
+  const predicateNames = useMemo(
+    () =>
+      model ? [...new Set(model.predicates.map((p) => p.name))] : [],
+    [model],
+  );
+
   const { queryResult, execute } = useQueryExecutor(
     model,
     code.queryCode,
@@ -58,27 +74,31 @@ export const useModelEditor = () => {
   );
 
   const graph = useGraphVisualization(model, queryResult, errors);
+  const { setNodes, setEdges } = graph;
 
-  const handleExportPrologCode = useCallback(() => {
-    if (!model || errors.length) return;
+  const onNodesChange = useCallback(
+    (changes: NodeChange<AnyVisualizationNode>[]) =>
+      setNodes((nds) => applyNodeChanges(changes, nds)),
+    [setNodes],
+  );
 
-    const prologCode = serializeModelToProlog({
+  const onEdgesChange = useCallback(
+    (changes: EdgeChange[]) =>
+      setEdges((eds) => applyEdgeChanges(changes, eds)),
+    [setEdges],
+  );
+
+  const onConnect = useCallback(
+    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    [setEdges],
+  );
+
+  const getPrologCode = useCallback((): string | null => {
+    if (!model || errors.length) return null;
+    return serializeModelToProlog({
       model,
       queryAst: queryParseResult.value,
     });
-
-    const blob = new Blob([prologCode], {
-      type: "text/plain;charset=utf-8",
-    });
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "predicate-model.pl";
-    link.click();
-
-    URL.revokeObjectURL(url);
   }, [model, errors, queryParseResult.value]);
 
   return {
@@ -89,6 +109,9 @@ export const useModelEditor = () => {
         universeCode: code.universeCode,
         queryCode: code.queryCode,
         queryResult,
+        constantNames,
+        universeMembers,
+        predicateNames,
       },
       handlers: {
         handlePredicatesCodeChange: (value: string | undefined) =>
@@ -100,7 +123,7 @@ export const useModelEditor = () => {
         handleQueryCodeChange: (value: string | undefined) =>
           code.setQueryCode(value || ""),
         handleExecuteQuery: execute,
-        handleExportPrologCode,
+        getPrologCode,
       },
       errors,
       syntaxErrors,
@@ -108,12 +131,9 @@ export const useModelEditor = () => {
     visualization: {
       nodes: graph.nodes,
       edges: graph.edges,
-      onNodesChange: (changes: NodeChange<ConstantNode>[]) =>
-        graph.setNodes((nds) => applyNodeChanges(changes, nds)),
-      onEdgesChange: (changes: EdgeChange[]) =>
-        graph.setEdges((eds) => applyEdgeChanges(changes, eds)),
-      onConnect: (params: Connection) =>
-        graph.setEdges((eds) => addEdge(params, eds)),
+      onNodesChange,
+      onEdgesChange,
+      onConnect,
     },
   };
 };

@@ -37,7 +37,10 @@ const PredicatesEditor = ({
   });
 
   return (
-    <>
+    <div
+      data-tour="predicates-editor"
+      style={{ display: "flex", flexDirection: "column", flex: 1, gap: "8px" }}
+    >
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
         <IconArrowUpDown />
         <Chip text={t("modelElements.predicates")} />
@@ -50,7 +53,7 @@ const PredicatesEditor = ({
           handleCompletionMount(editor, monaco);
         }}
       />
-    </>
+    </div>
   );
 };
 

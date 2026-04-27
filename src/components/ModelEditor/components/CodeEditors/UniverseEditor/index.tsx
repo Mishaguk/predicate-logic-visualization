@@ -23,7 +23,7 @@ const UniverseEditor = ({ value, onChange, syntaxErrors = [] }: Props) => {
   });
 
   return (
-    <>
+    <div data-tour="universe-editor" style={{ display: "flex", flexDirection: "column", flex: 1, gap: "8px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
         <IconGlobe />
         <Chip text={t("modelElements.universe")} />
@@ -33,7 +33,7 @@ const UniverseEditor = ({ value, onChange, syntaxErrors = [] }: Props) => {
         value={value}
         onMount={(editor, monaco: Monaco) => handleMount(editor, monaco)}
       />
-    </>
+    </div>
   );
 };
 

@@ -1,5 +1,5 @@
 {
-  "name": "vite-project",
+  "name": "predicatelogicmodelvisualization",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,6 +13,7 @@
     "@monaco-editor/react": "^4.7.0",
     "@xyflow/react": "^12.10.0",
     "chevrotain": "^11.0.3",
+    "driver.js": "^1.4.0",
     "framer-motion": "^12.23.26",
     "i18next": "^25.8.0",
     "i18next-browser-languagedetector": "^8.2.0",

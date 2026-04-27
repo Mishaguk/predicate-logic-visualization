@@ -11,3 +11,4 @@ export { default as IconMenu } from "./menu.svg?react";
 export { default as IconChevronRight } from "./chevron-right.svg?react";
 export { default as IconCircleAlert } from "./circle-alert.svg?react";
 export { default as visualizationExample } from "./images/visualization-example.png";
+export { default as IconBook } from "./book.svg?react";

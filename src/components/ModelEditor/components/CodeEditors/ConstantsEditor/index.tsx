@@ -37,7 +37,10 @@ const ConstantsEditor = ({
   });
 
   return (
-    <>
+    <div
+      data-tour="constants-editor"
+      style={{ display: "flex", flexDirection: "column", flex: 1, gap: "8px" }}
+    >
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
         <IconDatabase />
         <Chip text={t("modelElements.constants")} />
@@ -50,7 +53,7 @@ const ConstantsEditor = ({
           handleCompletionMount(editor, monaco);
         }}
       />
-    </>
+    </div>
   );
 };
 

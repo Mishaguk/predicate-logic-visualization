@@ -125,17 +125,19 @@ const ModelEditor = ({
           minSize={ROOT_PANEL_MIN_SIZE}
           collapsible={false}
         >
-          <Visualization
-            edges={visualization.edges}
-            nodes={visualization.nodes}
-            onConnect={visualization.onConnect}
-            onEdgesChange={visualization.onEdgesChange}
-            onNodesChange={visualization.onNodesChange}
-            fitViewTrigger={fitViewTrigger}
-          />
+          <div data-tour="visualization-panel" style={{ flex: 1, display: "flex", minHeight: 0 }}>
+            <Visualization
+              edges={visualization.edges}
+              nodes={visualization.nodes}
+              onConnect={visualization.onConnect}
+              onEdgesChange={visualization.onEdgesChange}
+              onNodesChange={visualization.onNodesChange}
+              fitViewTrigger={fitViewTrigger}
+            />
+          </div>
 
           {!isMobile && (
-            <div className={styles.buttonsContainer}>
+            <div className={styles.buttonsContainer} data-tour="export-btn">
               <Button
                 text={t("actions.exportPrologCode")}
                 onClick={onOpenPrologExport}

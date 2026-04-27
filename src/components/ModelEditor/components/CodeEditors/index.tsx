@@ -86,7 +86,7 @@ const CodeEditors = ({
             maxSize={75}
             collapsible={false}
             className={panelStyles.panel}
-            style={{ gap: "8px", alignItems: "self-start" }}
+            style={{ gap: "8px" }}
           >
             <UniverseEditor
               value={universeCode}
@@ -103,10 +103,14 @@ const CodeEditors = ({
             className={panelStyles.panel}
             style={{ gap: "8px", alignItems: "self-start" }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            <div
+              data-tour="errors-panel"
+              style={{ display: "flex", alignItems: "center", gap: "4px" }}
+            >
               <IconShIeldX />
               <Chip text={t("modelElements.compilationErrors")} />
             </div>
+
             {/* // Padding for errors container while not expanding outer panel */}
             <div className={styles.errorsContainer}>
               <div className={styles.errors}>
@@ -165,7 +169,7 @@ const CodeEditors = ({
                 minSize={MIN_PANEL_SIZE}
                 maxSize={65}
                 collapsible={false}
-                style={{ gap: "8px", alignItems: "self-start" }}
+                style={{ gap: "8px" }}
               >
                 <ConstantsEditor
                   value={constantsCode}
@@ -180,7 +184,7 @@ const CodeEditors = ({
                 maxSize={70}
                 collapsible={false}
                 className={panelStyles.panel}
-                style={{ gap: "8px", alignItems: "self-start" }}
+                style={{ gap: "8px" }}
               >
                 <PredicatesEditor
                   value={predicatesCode}
@@ -197,7 +201,7 @@ const CodeEditors = ({
             maxSize={60}
             collapsible={false}
             className={panelStyles.panel}
-            style={{ gap: "8px", alignItems: "self-start" }}
+            style={{ gap: "8px" }}
           >
             <QueryEditor
               value={queryCode}

@@ -208,7 +208,7 @@ const computeEdges = (
             ? closestHyperEdgeHandle(srcPos, hubPos)
             : DEFAULT_TARGET_HANDLE;
         edges.push({
-          id: `${arg}->hyperedge-${name}-${i}`,
+          id: `${arg}->${hub}-${i}`,
           source: arg,
           target: hub,
           sourceHandle: DEFAULT_SOURCE_HANDLE,

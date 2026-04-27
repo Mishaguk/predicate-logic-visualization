@@ -1,4 +1,4 @@
-import { IconHelp, IconLayers, IconMenu } from "../../assets";
+import { IconHelp, IconLayers, IconMenu, IconBook } from "../../assets";
 import { useTranslation } from "react-i18next";
 import Button from "../Button";
 import LanguageSwitch from "../LanguageSwitch";
@@ -13,6 +13,7 @@ type Props = {
   onOpenSyntaxGuide: () => void;
   isCodePanelHidden?: boolean;
   onToggleCodePanel: () => void;
+  onStartTour: () => void;
 };
 
 const Header = ({
@@ -20,6 +21,7 @@ const Header = ({
   onOpenSyntaxGuide,
   isCodePanelHidden,
   onToggleCodePanel,
+  onStartTour,
 }: Props) => {
   const { t } = useTranslation("common");
   const isMobile = useMediaQuery("(max-width: 900px)");
@@ -28,7 +30,7 @@ const Header = ({
   const shouldShowMenuContent = !isMobile || isMenuOpen;
 
   return (
-    <div className={styles.header}>
+    <div className={styles.header} data-tour="header">
       {isMobile && (
         <button
           className={styles.menuToggle}
@@ -60,11 +62,19 @@ const Header = ({
               text={t("nav.examples")}
               icon={IconLayers}
               onClick={onOpenExamples}
+              data-tour="examples-btn"
+            />
+            <Button
+              text={t("nav.tour")}
+              icon={IconBook}
+              onClick={onStartTour}
+              data-tour="tour-btn"
             />
             <Button
               text={t("nav.syntaxGuide")}
               icon={IconHelp}
               onClick={onOpenSyntaxGuide}
+              data-tour="syntax-guide-btn"
             />
           </div>
         </>

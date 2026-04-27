@@ -12,6 +12,7 @@ import PrologExportModal from "./components/PrologExportModal";
 import { registerUniverseLanguage } from "./dsl/universe/language";
 import { useModelEditor } from "./hooks/useModelEditor";
 import { registerQueryLanguage } from "./dsl/query/language";
+import { useTour } from "./hooks/useTour";
 
 function App() {
   const modelEditor = useModelEditor();
@@ -21,6 +22,12 @@ function App() {
   const [prologExportOpen, setPrologExportOpen] = useState(false);
   const [prologCode, setPrologCode] = useState<string | null>(null);
   const codePanelRef = useRef<ImperativePanelHandle | null>(null);
+
+  const { startTour } = useTour({
+    onBeforeStart: () => {
+      if (codePanelRef.current?.isCollapsed()) codePanelRef.current.expand();
+    },
+  });
 
   const handleOpenPrologExport = () => {
     setPrologCode(modelEditor.code.handlers.getPrologCode());
@@ -66,6 +73,7 @@ function App() {
         onOpenSyntaxGuide={() => setSyntaxGuideOpen(true)}
         onToggleCodePanel={toggleCodePanel}
         isCodePanelHidden={codePanelHidden}
+        onStartTour={startTour}
       />
       <ModelEditor
         {...modelEditor}

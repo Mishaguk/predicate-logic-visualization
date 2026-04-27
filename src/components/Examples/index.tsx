@@ -63,6 +63,14 @@ const EXAMPLES: Example[] = [
     query: "∃ ?x: Even(?x) and Succ(?x, n3)",
   },
   {
+    titleKey: "grandParent",
+    universe: "People = {Alice, Bob, Carol, Dan};",
+    constants: "alice -> Alice\nbob -> Bob\ncarol -> Carol\ndan -> Dan",
+    predicates:
+      "Parent(alice, bob)\nParent(bob, carol)\nParent(bob, dan)\nGrandParent(alice, bob, carol)\nGrandParent(alice, bob, dan)",
+    query: "GrandParent(alice, ?p, ?c)",
+  },
+  {
     titleKey: "colors",
     universe: "Colors = {Red, Blue, Yellow, Green, Orange, Purple};",
     constants:
@@ -94,11 +102,13 @@ const Examples = ({ open, onClose, onSelectExample }: Props) => {
               className={styles.card}
               onClick={() => onSelectExample?.(example)}
             >
-              <div className={styles.cardTitle}>
-                {t(`examples.items.${example.titleKey}.title`)}
-              </div>
-              <div className={styles.cardDescription}>
-                {t(`examples.items.${example.titleKey}.description`)}
+              <div>
+                <div className={styles.cardTitle}>
+                  {t(`examples.items.${example.titleKey}.title`)}
+                </div>
+                <div className={styles.cardDescription}>
+                  {t(`examples.items.${example.titleKey}.description`)}
+                </div>
               </div>
               <div className={styles.cardAction}>
                 {t("examples.pasteAction")} {"->"}

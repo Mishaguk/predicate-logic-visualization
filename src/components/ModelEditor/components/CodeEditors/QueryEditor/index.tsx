@@ -71,7 +71,10 @@ const QueryEditor = ({
   })();
 
   return (
-    <>
+    <div
+      data-tour="query-editor"
+      style={{ display: "flex", flexDirection: "column", flex: 1, gap: "8px" }}
+    >
       <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
         <IconCIrclePlay />
         <Chip text={t("modelElements.query")} />
@@ -86,7 +89,7 @@ const QueryEditor = ({
           handleConstantCompletion(editor, monaco);
         }}
       />
-      <div className={styles.queryActionRow}>
+      <div data-tour="run-query-btn" className={styles.queryActionRow}>
         <Button
           icon={IconChevronRight}
           text={t("actions.runQuery")}
@@ -109,7 +112,7 @@ const QueryEditor = ({
           <span className={styles.queryResultValue}>{queryResultText}</span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

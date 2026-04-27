@@ -2,6 +2,7 @@
   "nav": {
     "examples": "examples",
     "example": "example",
+    "tour": "Tour",
     "syntaxGuide": "Syntax Guide",
     "menu": "Menu",
     "hideModelEditor": "hide model editor"
@@ -64,9 +65,68 @@
         "title": "Number Chain",
         "description": "Numeric-like domain with successor and parity."
       },
+      "grandParent": {
+        "title": "Grandparent",
+        "description": "Ternary relation linking grandparent, parent, and child."
+      },
+      "colorMixing": {
+        "title": "Color Mixing",
+        "description": "Ternary predicates named after the resulting color show how two primaries mix."
+      },
       "colors": {
         "title": "Colors",
         "description": "Warm/cool color grouping with complement pairs."
+      }
+    }
+  },
+  "tour": {
+    "next": "Next",
+    "prev": "Previous",
+    "done": "Done",
+    "steps": {
+      "header": {
+        "title": "Welcome",
+        "description": "This is the app header. Load examples, open the syntax guide, or switch theme and language."
+      },
+      "examples": {
+        "title": "Examples",
+        "description": "Load a ready-made predicate-logic model to explore instantly."
+      },
+      "syntaxGuide": {
+        "title": "Syntax Guide",
+        "description": "Full reference for universe, constants, predicates, and query syntax."
+      },
+      "universe": {
+        "title": "Universe Editor",
+        "description": "Define the domain — list every element that can exist in this world."
+      },
+      "constants": {
+        "title": "Constants Editor",
+        "description": "Map constant names to universe elements used in predicates and queries."
+      },
+      "predicates": {
+        "title": "Predicates Editor",
+        "description": "Define facts and relations that link elements of the universe."
+      },
+      "errors": {
+        "title": "Compilation Errors",
+        "description": "Syntax and semantic errors appear here. Fix them to unlock visualization and query execution."
+      },
+      "query": {
+        "title": "Query Editor",
+        "description": "Write a logical formula using atoms, and/or/not operators, and quantifiers (forAll, exists)."
+      },
+      "runQuery": {
+        "title": "Run Query",
+        "description": "Execute the query to get a boolean result or variable bindings showing which elements satisfy the formula."
+      },
+      "visualization": {
+        "title": "Graph Visualization",
+        "description": "Your model as a directed graph. Nodes are universe elements; edges are predicate facts. Matched nodes are highlighted after a query."
+      },
+      "export": {
+        "title": "Export to Prolog",
+        "description": "Download your model and query as a .pl file ready to use in any Prolog system."
       }
     }
   },

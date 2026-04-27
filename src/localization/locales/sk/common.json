@@ -2,6 +2,7 @@
   "nav": {
     "examples": "príklady",
     "example": "príklad",
+    "tour": "Prehliadka",
     "syntaxGuide": "Príručka syntaxe",
     "menu": "Menu",
     "hideModelEditor": "skryť editor modelu"
@@ -64,9 +65,68 @@
         "title": "Číselný reťazec",
         "description": "Číselná doména s nasledovníkom a paritou."
       },
+      "grandParent": {
+        "title": "Starý rodič",
+        "description": "Ternárny vzťah spájajúci starého rodiča, rodiča a dieťa."
+      },
+      "colorMixing": {
+        "title": "Miešanie farieb",
+        "description": "Ternárne predikáty pomenované podľa výslednej farby ukazujú miešanie dvoch základných farieb."
+      },
       "colors": {
         "title": "Farby",
         "description": "Zoskupenie teplých/studených farieb s komplementárnymi pármi."
+      }
+    }
+  },
+  "tour": {
+    "next": "Ďalej",
+    "prev": "Späť",
+    "done": "Hotovo",
+    "steps": {
+      "header": {
+        "title": "Vitajte",
+        "description": "Toto je hlavička aplikácie. Načítajte príklady, otvorte príručku syntaxe alebo prepnite tému a jazyk."
+      },
+      "examples": {
+        "title": "Príklady",
+        "description": "Načítajte hotový model predikátovej logiky a ihneď ho preskúmajte."
+      },
+      "syntaxGuide": {
+        "title": "Príručka syntaxe",
+        "description": "Úplná referencia syntaxe domény, konštánt, predikátov a dotazov."
+      },
+      "universe": {
+        "title": "Editor domény",
+        "description": "Definujte doménu — uveďte všetky prvky, ktoré môžu existovať v tomto svete."
+      },
+      "constants": {
+        "title": "Editor konštánt",
+        "description": "Priraďte názvy konštánt k prvkom domény používaným v predikátoch a dotazoch."
+      },
+      "predicates": {
+        "title": "Editor predikátov",
+        "description": "Definujte fakty a vzťahy spájajúce prvky domény."
+      },
+      "errors": {
+        "title": "Chyby kompilácie",
+        "description": "Syntaktické a sémantické chyby sa zobrazujú tu. Opravte ich, aby sa odomkla vizualizácia a vykonávanie dotazov."
+      },
+      "query": {
+        "title": "Editor dotazov",
+        "description": "Napíšte logickú formulu pomocou atómov, operátorov and/or/not a kvantifikátorov (forAll, exists)."
+      },
+      "runQuery": {
+        "title": "Spustiť dotaz",
+        "description": "Vykonajte dotaz a získajte booleovský výsledok alebo viazania premenných."
+      },
+      "visualization": {
+        "title": "Grafová vizualizácia",
+        "description": "Váš model ako orientovaný graf. Uzly sú prvky domény; hrany sú fakty predikátov."
+      },
+      "export": {
+        "title": "Export do Prologu",
+        "description": "Stiahnite model a dotaz ako súbor .pl pre ľubovoľný systém Prolog."
       }
     }
   },

@@ -18,6 +18,7 @@ type Props = {
   value: string;
   onChange: (value: string | undefined) => void;
   onExecute: () => void;
+  onClear?: () => void;
   queryResult: boolean | Binding[] | null;
   syntaxErrors?: SyntaxError[];
   predicateNames: string[];
@@ -28,6 +29,7 @@ const QueryEditor = ({
   value,
   onChange,
   onExecute,
+  onClear,
   queryResult,
   syntaxErrors = [],
   predicateNames,
@@ -97,6 +99,14 @@ const QueryEditor = ({
           style={{ width: "auto" }}
           onClick={onExecute}
         />
+        {onClear && (
+          <Button
+            text={t("actions.clearModel")}
+            style={{ width: "auto" }}
+            onClick={onClear}
+            data-tour="clear-model-btn"
+          />
+        )}
         <div
           className={`${styles.queryResult} ${
             queryResult === null

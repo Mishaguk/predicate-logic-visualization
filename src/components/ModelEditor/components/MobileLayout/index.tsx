@@ -32,6 +32,7 @@ type Props = {
   handleConstantsCodeChange: (value: string | undefined) => void;
   handleQueryCodeChange: (value: string | undefined) => void;
   handleExecuteQuery: () => void;
+  handleClearModel?: () => void;
   onOpenPrologExport?: () => void;
   constantNames: string[];
   universeMembers: string[];
@@ -56,6 +57,7 @@ const MobileLayout = ({
   handleConstantsCodeChange,
   handleQueryCodeChange,
   handleExecuteQuery,
+  handleClearModel,
   onOpenPrologExport,
   visualization,
   fitViewTrigger,
@@ -147,6 +149,7 @@ const MobileLayout = ({
                 value={queryCode}
                 onChange={handleQueryCodeChange}
                 onExecute={handleExecuteQuery}
+                onClear={handleClearModel}
                 queryResult={queryResult}
                 syntaxErrors={queryErrors}
                 predicateNames={predicateNames}

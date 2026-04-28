@@ -4,7 +4,6 @@
   border-radius: var(--radius-lg);
   display: flex;
   justify-content: space-between;
-  flex-direction: row-reverse;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--spacing-lg);
@@ -13,11 +12,30 @@
 .headerButtons {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--spacing-lg);
 }
 
-.headerActions button {
-  width: auto;
+.burgerWrapper {
+  position: relative;
+  display: inline-flex;
+}
+
+.burgerPanel {
+  position: absolute;
+  top: calc(100% + var(--spacing-xs));
+  left: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-primary);
+  border: 1px solid var(--color-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.18));
+  min-width: 180px;
+  transform-origin: top left;
 }
 
 .menuToggle {
@@ -37,7 +55,7 @@
   background: var(--button-hover-bg);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1140px) {
   .header {
     flex-direction: column;
     align-items: stretch;
@@ -52,38 +70,18 @@
     width: 100%;
   }
 
-  .headerActions button {
-    width: 100%;
-    justify-content: stretch;
-  }
-}
-
-@media (max-width: 640px) {
-  .header {
-    padding: var(--spacing-sm);
-    gap: var(--spacing-md);
-  }
-
-  .headerButtons {
-    gap: var(--spacing-sm);
-  }
-
-  .headerControls label {
+  .headerButtons > * {
     width: 100%;
   }
 
-  .headerActions {
-    flex-direction: column;
-  }
-
-  .headerActions button {
+  .burgerWrapper {
+    display: flex;
     width: 100%;
   }
-}
 
-@media (max-width: 420px) {
-  .headerControls {
-    flex-direction: column;
-    align-items: stretch;
+  .burgerPanel {
+    position: static;
+    width: 100%;
+    min-width: 0;
   }
 }

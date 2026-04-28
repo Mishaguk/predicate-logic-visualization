@@ -14,6 +14,7 @@ import {
   type NodeChange,
 } from "@xyflow/react";
 import type { AnyVisualizationNode } from "../../types/visualization";
+import type { ProjectFile } from "../../persistence/projectFile";
 
 export const useModelEditor = () => {
   const code = useCodeState();
@@ -93,6 +94,23 @@ export const useModelEditor = () => {
     [setEdges],
   );
 
+  const handleLoadProject = useCallback(
+    (project: ProjectFile) => {
+      code.setUniverseCode(project.universe);
+      code.setConstantsCode(project.constants);
+      code.setPredicatesCode(project.predicates);
+      code.setQueryCode(project.query);
+    },
+    [code],
+  );
+
+  const handleClearModel = useCallback(() => {
+    code.setUniverseCode("");
+    code.setConstantsCode("");
+    code.setPredicatesCode("");
+    code.setQueryCode("");
+  }, [code]);
+
   const getPrologCode = useCallback((): string | null => {
     if (!model || errors.length) return null;
     return serializeModelToProlog({
@@ -123,6 +141,8 @@ export const useModelEditor = () => {
         handleQueryCodeChange: (value: string | undefined) =>
           code.setQueryCode(value || ""),
         handleExecuteQuery: execute,
+        handleLoadProject,
+        handleClearModel,
         getPrologCode,
       },
       errors,

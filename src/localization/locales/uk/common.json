@@ -5,7 +5,10 @@
     "tour": "Тур",
     "syntaxGuide": "Посібник із синтаксису",
     "menu": "Меню",
-    "hideModelEditor": "сховати редактор моделі"
+    "hideModelEditor": "сховати редактор моделі",
+    "saveProject": "Зберегти проєкт",
+    "loadProject": "Завантажити проєкт",
+    "projectMenu": "Проєкт"
   },
   "modelElements": {
     "model": "Модель",
@@ -21,6 +24,7 @@
     "exportPrologCode": "Експортувати PROLOG код",
     "createVisualization": "Створити візуалізацію",
     "runQuery": "Виконати запит",
+    "clearModel": "Очистити модель",
     "copy": "Копіювати",
     "downloadPl": "Завантажити .pl"
   },

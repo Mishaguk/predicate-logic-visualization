@@ -5,7 +5,10 @@
     "tour": "Tour",
     "syntaxGuide": "Syntax Guide",
     "menu": "Menu",
-    "hideModelEditor": "hide model editor"
+    "hideModelEditor": "hide model editor",
+    "saveProject": "Save project",
+    "loadProject": "Load project",
+    "projectMenu": "Project"
   },
   "modelElements": {
     "model": "Model",
@@ -21,6 +24,7 @@
     "exportPrologCode": "Export PROLOG code",
     "createVisualization": "Create visualization",
     "runQuery": "Run query",
+    "clearModel": "Clear model",
     "copy": "Copy",
     "downloadPl": "Download .pl"
   },

@@ -52,6 +52,8 @@ const getPossibleVariablesForValue = (
 const hyperEdgeId = (name: string, args: string[]) =>
   `hyperedge-${name}-${args.join("|")}`;
 
+const HUB_MIN_DISTANCE = 80;
+
 const computeHyperEdgeNodes = (
   model: Model,
   existingPositions: Map<string, { x: number; y: number }>,
@@ -65,16 +67,31 @@ const computeHyperEdgeNodes = (
         const p = constantPositions.get(a);
         return p ? [p] : [];
       });
-      const centroid =
-        connected.length > 0
-          ? {
-              x: connected.reduce((s, p) => s + p.x, 0) / connected.length,
-              y: connected.reduce((s, p) => s + p.y, 0) / connected.length,
-            }
-          : { x: 0, y: 0 };
+
+      let position: { x: number; y: number } = { x: 0, y: 0 };
+      if (connected.length > 0) {
+        const cx = connected.reduce((s, p) => s + p.x, 0) / connected.length;
+        const cy = connected.reduce((s, p) => s + p.y, 0) / connected.length;
+        const collides = connected.some(
+          (p) => Math.hypot(p.x - cx, p.y - cy) < HUB_MIN_DISTANCE,
+        );
+        if (collides) {
+          const xs = connected.map((p) => p.x);
+          const ys = connected.map((p) => p.y);
+          const xRange = Math.max(...xs) - Math.min(...xs);
+          const yRange = Math.max(...ys) - Math.min(...ys);
+          position =
+            yRange <= xRange
+              ? { x: cx, y: cy + offsetY / 2 }
+              : { x: cx + offsetX / 2, y: cy };
+        } else {
+          position = { x: cx, y: cy };
+        }
+      }
+
       return {
         id,
-        position: existingPositions.get(id) ?? centroid,
+        position: existingPositions.get(id) ?? position,
         data: { label: name },
         type: "hyperEdge" as const,
       };

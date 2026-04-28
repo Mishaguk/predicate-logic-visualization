@@ -10,7 +10,6 @@
     color 0.2s ease,
     transform 0.15s ease;
   box-shadow: var(--shadow-sm);
-  width: 100%;
 }
 
 .primary:hover {

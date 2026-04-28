@@ -13,6 +13,11 @@ import { registerUniverseLanguage } from "./dsl/universe/language";
 import { useModelEditor } from "./hooks/useModelEditor";
 import { registerQueryLanguage } from "./dsl/query/language";
 import { useTour } from "./hooks/useTour";
+import {
+  downloadProjectFile,
+  parseProject,
+  serializeProject,
+} from "./persistence/projectFile";
 
 function App() {
   const modelEditor = useModelEditor();
@@ -49,6 +54,28 @@ function App() {
     });
   }, []);
 
+  const handleSaveProject = () => {
+    const { universeCode, constantsCode, predicatesCode, queryCode } =
+      modelEditor.code.states;
+    const json = serializeProject({
+      universe: universeCode,
+      constants: constantsCode,
+      predicates: predicatesCode,
+      query: queryCode,
+    });
+    downloadProjectFile("project.json", json);
+  };
+
+  const handleLoadProject = async (file: File) => {
+    const text = await file.text();
+    const result = parseProject(text);
+    if (!result.ok) {
+      alert(result.error);
+      return;
+    }
+    modelEditor.code.handlers.handleLoadProject(result.project);
+  };
+
   const handleSelectExample = (example: Example) => {
     modelEditor.code.handlers.handleUniverseCodeChange(example.universe);
     modelEditor.code.handlers.handleConstantsCodeChange(example.constants);
@@ -74,6 +101,8 @@ function App() {
         onToggleCodePanel={toggleCodePanel}
         isCodePanelHidden={codePanelHidden}
         onStartTour={startTour}
+        onSaveProject={handleSaveProject}
+        onLoadProject={handleLoadProject}
       />
       <ModelEditor
         {...modelEditor}

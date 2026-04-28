@@ -5,7 +5,10 @@
     "tour": "Prehliadka",
     "syntaxGuide": "Príručka syntaxe",
     "menu": "Menu",
-    "hideModelEditor": "skryť editor modelu"
+    "hideModelEditor": "skryť editor modelu",
+    "saveProject": "Uložiť projekt",
+    "loadProject": "Načítať projekt",
+    "projectMenu": "Projekt"
   },
   "modelElements": {
     "model": "Model",
@@ -21,6 +24,7 @@
     "exportPrologCode": "Exportovať PROLOG kód",
     "createVisualization": "Vytvoriť vizualizáciu",
     "runQuery": "Spustiť dotaz",
+    "clearModel": "Vyčistiť model",
     "copy": "Kopírovať",
     "downloadPl": "Stiahnuť .pl"
   },

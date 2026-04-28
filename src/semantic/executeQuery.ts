@@ -145,36 +145,92 @@ function solve(
     case "Quantifier": {
       // Variables are unified against predicate.universeArgs, so quantified
       // assignments must iterate over universe values as well.
-      const domain = Array.from(model.universe.values()).flat(); // Set<string> -> string[]
+      const domain = Array.from(model.universe.values()).flat();
       const isForAll = expr.quantifier === "ForAll";
+      const quantifiedVars = expr.vars.map((v) => v.name);
+
+      const enumerateAssignments = (
+        seed: Binding,
+      ): Binding[] => {
+        let frontier: Binding[] = [clone(seed)];
+        for (const name of quantifiedVars) {
+          const next: Binding[] = [];
+          for (const b of frontier) {
+            for (const value of domain) {
+              const extended = clone(b);
+              extended.set(name, value);
+              next.push(extended);
+            }
+          }
+          frontier = next;
+        }
+        return frontier;
+      };
+
+      const stripQuantified = (b: Binding): Binding => {
+        const c = clone(b);
+        for (const name of quantifiedVars) c.delete(name);
+        return c;
+      };
+
+      const bindingKey = (b: Binding): string =>
+        [...b.entries()]
+          .sort(([a], [b2]) => a.localeCompare(b2))
+          .map(([k, v]) => `${k}=${v}`)
+          .join("|");
+
       const out: Binding[] = [];
 
       for (const seed of seeds) {
-        const checkAssignment = (idx: number, current: Binding): boolean => {
-          if (idx === expr.vars.length) {
-            return solve(expr.body, model, [current]).length > 0;
+        const assignments = enumerateAssignments(seed);
+
+        if (isForAll) {
+          // Gather candidate free-var bindings from any satisfying assignment;
+          // a candidate survives only if the body holds for *every* assignment.
+          const candidates = new Map<string, Binding>();
+          if (assignments.length === 0) {
+            candidates.set(bindingKey(seed), clone(seed));
+          } else {
+            for (const a of assignments) {
+              for (const sol of solve(expr.body, model, [a])) {
+                const stripped = stripQuantified(sol);
+                candidates.set(bindingKey(stripped), stripped);
+              }
+            }
+            if (candidates.size === 0) {
+              // body unsatisfiable somewhere — but if it has no free vars and
+              // domain is empty, ∀ is vacuously true. Seed is the only candidate.
+              candidates.set(bindingKey(seed), clone(seed));
+            }
           }
 
-          const varName = expr.vars[idx].name;
-
-          if (domain.length === 0) {
-            return isForAll;
+          for (const cand of candidates.values()) {
+            let allHold = true;
+            for (const a of assignments) {
+              const merged = clone(cand);
+              for (const [k, v] of a) {
+                if (quantifiedVars.includes(k)) merged.set(k, v);
+              }
+              if (solve(expr.body, model, [merged]).length === 0) {
+                allHold = false;
+                break;
+              }
+            }
+            if (allHold) out.push(cand);
           }
-
-          for (const value of domain) {
-            const next = clone(current);
-            next.set(varName, value);
-            const branch = checkAssignment(idx + 1, next);
-
-            if (isForAll && !branch) return false;
-            if (!isForAll && branch) return true;
+        } else {
+          // Exists: collect all body solutions across assignments, strip
+          // quantified vars, dedupe.
+          const seen = new Map<string, Binding>();
+          for (const a of assignments) {
+            for (const sol of solve(expr.body, model, [a])) {
+              const stripped = stripQuantified(sol);
+              const key = bindingKey(stripped);
+              if (!seen.has(key)) seen.set(key, stripped);
+            }
           }
-
-          return isForAll ? true : false;
-        };
-
-        const ok = checkAssignment(0, clone(seed));
-        if (ok) out.push(clone(seed));
+          out.push(...seen.values());
+        }
       }
 
       return out;

@@ -164,12 +164,6 @@ const Header = ({
                 />
               </div>
             )}
-            <Button
-              text={t("nav.examples")}
-              icon={IconLayers}
-              onClick={onOpenExamples}
-              data-tour="examples-btn"
-            />
             {!isMobile && (
               <Button
                 text={t("nav.tour")}
@@ -178,6 +172,13 @@ const Header = ({
                 data-tour="tour-btn"
               />
             )}
+            <Button
+              text={t("nav.examples")}
+              icon={IconLayers}
+              onClick={onOpenExamples}
+              data-tour="examples-btn"
+            />
+
             <Button
               text={t("nav.syntaxGuide")}
               icon={IconHelp}

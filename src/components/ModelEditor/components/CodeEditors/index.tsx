@@ -199,7 +199,7 @@ const CodeEditors = ({
           </Panel>
           <RenderResizeHandle direction="vertical" />
           <Panel
-            minSize={MIN_PANEL_SIZE + 10}
+            minSize={MIN_PANEL_SIZE - 20}
             maxSize={60}
             collapsible={false}
             className={panelStyles.panel}

@@ -75,22 +75,38 @@ const QueryEditor = ({
   return (
     <div
       data-tour="query-editor"
-      style={{ display: "flex", flexDirection: "column", flex: 1, gap: "8px" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
+        flex: 1,
+        minHeight: 0,
+        height: "100%",
+      }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "4px",
+          flexShrink: 0,
+        }}
+      >
         <IconCIrclePlay />
         <Chip text={t("modelElements.query")} />
       </div>
-      <CodeEditor
-        onChange={onChange}
-        value={value}
-        language="queryDSL"
-        onMount={(editor, monaco: Monaco) => {
-          handleMarkersMount(editor, monaco);
-          handlePredicateCompletion(editor, monaco);
-          handleConstantCompletion(editor, monaco);
-        }}
-      />
+      <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
+        <CodeEditor
+          onChange={onChange}
+          value={value}
+          language="queryDSL"
+          onMount={(editor, monaco: Monaco) => {
+            handleMarkersMount(editor, monaco);
+            handlePredicateCompletion(editor, monaco);
+            handleConstantCompletion(editor, monaco);
+          }}
+        />
+      </div>
       <div data-tour="run-query-btn" className={styles.queryActionRow}>
         <Button
           icon={IconChevronRight}

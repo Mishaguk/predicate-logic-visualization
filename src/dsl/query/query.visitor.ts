@@ -24,7 +24,23 @@ export class QueryVisitor extends BaseQueryVisitor {
   }
 
   query(ctx: QueryCstChildren): QueryExpression {
-    return this.visit(ctx.orExpr[0]);
+    return this.visit(ctx.iffExpr[0]);
+  }
+
+  iffExpr(ctx: IffExprCstChildren): QueryExpression {
+    const left = this.visit(ctx.impliesExpr[0]) as QueryExpression;
+    if (!ctx.Iff?.length) return left;
+
+    const right = this.visit(ctx.impliesExpr[1]) as QueryExpression;
+    return { kind: "Iff", left, right };
+  }
+
+  impliesExpr(ctx: ImpliesExprCstChildren): QueryExpression {
+    const left = this.visit(ctx.orExpr[0]) as QueryExpression;
+    if (!ctx.Implies?.length) return left;
+
+    const right = this.visit(ctx.impliesExpr![0]) as QueryExpression;
+    return { kind: "Implies", left, right };
   }
 
   orExpr(ctx: OrExprCstChildren): QueryExpression {
@@ -40,36 +56,15 @@ export class QueryVisitor extends BaseQueryVisitor {
   }
 
   andExpr(ctx: AndExprCstChildren): QueryExpression {
-    let expr = this.visit(ctx.impliesExpr[0]) as QueryExpression;
-    for (let i = 1; i < ctx.impliesExpr.length; i++) {
+    let expr = this.visit(ctx.unaryExpr[0]) as QueryExpression;
+    for (let i = 1; i < ctx.unaryExpr.length; i++) {
       expr = {
         kind: "And",
         left: expr,
-        right: this.visit(ctx.impliesExpr[i]) as QueryExpression,
+        right: this.visit(ctx.unaryExpr[i]) as QueryExpression,
       };
     }
     return expr;
-  }
-
-  impliesExpr(ctx: ImpliesExprCstChildren): QueryExpression {
-    let expr = this.visit(ctx.IffExpr[0]) as QueryExpression;
-
-    for (let i = 1; i < ctx.IffExpr.length; i++) {
-      expr = {
-        kind: "Implies",
-        left: expr,
-        right: this.visit(ctx.IffExpr[i]) as QueryExpression,
-      };
-    }
-    return expr;
-  }
-
-  IffExpr(ctx: IffExprCstChildren): QueryExpression {
-    const left = this.visit(ctx.unaryExpr[0]) as QueryExpression;
-    if (!ctx.Iff) return left;
-
-    const right = this.visit(ctx.unaryExpr[1]) as QueryExpression;
-    return { kind: "Iff", left, right };
   }
 
   unaryExpr(ctx: UnaryExprCstChildren): QueryExpression {
@@ -105,7 +100,7 @@ export class QueryVisitor extends BaseQueryVisitor {
       name: string;
     }[];
 
-    const body = this.visit(ctx.orExpr[0]) as QueryExpression;
+    const body = this.visit(ctx.iffExpr[0]) as QueryExpression;
 
     return {
       kind: "Quantifier",
@@ -126,8 +121,8 @@ export class QueryVisitor extends BaseQueryVisitor {
       return this.visit(ctx.atom[0]);
     }
 
-    if (ctx.orExpr?.length) {
-      return this.visit(ctx.orExpr[0]);
+    if (ctx.iffExpr?.length) {
+      return this.visit(ctx.iffExpr[0]);
     }
 
     throw new Error("Invalid primary expression.");

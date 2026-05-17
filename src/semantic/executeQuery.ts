@@ -149,9 +149,7 @@ function solve(
       const isForAll = expr.quantifier === "ForAll";
       const quantifiedVars = expr.vars.map((v) => v.name);
 
-      const enumerateAssignments = (
-        seed: Binding,
-      ): Binding[] => {
+      const enumerateAssignments = (seed: Binding): Binding[] => {
         let frontier: Binding[] = [clone(seed)];
         for (const name of quantifiedVars) {
           const next: Binding[] = [];
@@ -240,6 +238,8 @@ function solve(
 
 export function executeQuery(queryCode: string, model: Model): QueryResult {
   const parsed = parseQuery(queryCode);
+
+  console.log("Parsed query:", parsed);
 
   if (!parsed.value || parsed.errors.length) {
     return {

@@ -36,7 +36,29 @@ export class QueryParser extends CstParser {
 
   // Entry
   public query = this.RULE("query", () => {
+    this.SUBRULE(this.iffExpr);
+  });
+
+  // Standard FOL precedence, tightest -> loosest: ¬ > ∧ > ∨ > → > ↔
+  // Grammar nests outer (lowest precedence) -> inner (highest precedence):
+  // iffExpr > impliesExpr > orExpr > andExpr > unaryExpr
+
+  // iffExpr := impliesExpr (Iff impliesExpr)?
+  private iffExpr = this.RULE("iffExpr", () => {
+    this.SUBRULE(this.impliesExpr);
+    this.OPTION(() => {
+      this.CONSUME(Iff);
+      this.SUBRULE2(this.impliesExpr);
+    });
+  });
+
+  // impliesExpr := orExpr (Implies impliesExpr)?   // right-assoc
+  private impliesExpr = this.RULE("impliesExpr", () => {
     this.SUBRULE(this.orExpr);
+    this.OPTION(() => {
+      this.CONSUME(Implies);
+      this.SUBRULE2(this.impliesExpr);
+    });
   });
 
   // orExpr := andExpr (Or andExpr)*
@@ -50,25 +72,9 @@ export class QueryParser extends CstParser {
 
   // andExpr := unaryExpr (And unaryExpr)*
   private andExpr = this.RULE("andExpr", () => {
-    this.SUBRULE(this.impliesExpr);
+    this.SUBRULE(this.unaryExpr);
     this.MANY(() => {
       this.CONSUME(And);
-      this.SUBRULE2(this.impliesExpr);
-    });
-  });
-
-  // impliesExpr := IffExpr (Implies impliesExpr)?   // right-assoc
-  private impliesExpr = this.RULE("impliesExpr", () => {
-    this.SUBRULE(this.IffExpr);
-    this.OPTION(() => {
-      this.CONSUME(Implies);
-      this.SUBRULE2(this.impliesExpr);
-    });
-  });
-  private IffExpr = this.RULE("IffExpr", () => {
-    this.SUBRULE(this.unaryExpr);
-    this.OPTION(() => {
-      this.CONSUME(Iff);
       this.SUBRULE2(this.unaryExpr);
     });
   });
@@ -96,7 +102,7 @@ export class QueryParser extends CstParser {
     this.SUBRULE(this.quantVariables);
 
     this.CONSUME(Colon);
-    this.SUBRULE(this.orExpr);
+    this.SUBRULE(this.iffExpr);
   });
 
   private quantVariables = this.RULE("quantVariables", () => {
@@ -114,7 +120,7 @@ export class QueryParser extends CstParser {
       {
         ALT: () => {
           this.CONSUME(LParen);
-          this.SUBRULE(this.orExpr);
+          this.SUBRULE(this.iffExpr);
           this.CONSUME(RParen);
         },
       },

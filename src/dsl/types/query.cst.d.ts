@@ -6,7 +6,28 @@ export interface QueryCstNode extends CstNode {
 }
 
 export type QueryCstChildren = {
+  iffExpr: IffExprCstNode[];
+};
+
+export interface IffExprCstNode extends CstNode {
+  name: "iffExpr";
+  children: IffExprCstChildren;
+}
+
+export type IffExprCstChildren = {
+  impliesExpr: ImpliesExprCstNode[];
+  Iff?: IToken[];
+};
+
+export interface ImpliesExprCstNode extends CstNode {
+  name: "impliesExpr";
+  children: ImpliesExprCstChildren;
+}
+
+export type ImpliesExprCstChildren = {
   orExpr: OrExprCstNode[];
+  Implies?: IToken[];
+  impliesExpr?: ImpliesExprCstNode[];
 };
 
 export interface OrExprCstNode extends CstNode {
@@ -25,29 +46,8 @@ export interface AndExprCstNode extends CstNode {
 }
 
 export type AndExprCstChildren = {
-  impliesExpr: ImpliesExprCstNode[];
-  And?: IToken[];
-};
-
-export interface ImpliesExprCstNode extends CstNode {
-  name: "impliesExpr";
-  children: ImpliesExprCstChildren;
-}
-
-export type ImpliesExprCstChildren = {
-  IffExpr: IffExprCstNode[];
-  Implies?: IToken[];
-  impliesExpr?: ImpliesExprCstNode[];
-};
-
-export interface IffExprCstNode extends CstNode {
-  name: "IffExpr";
-  children: IffExprCstChildren;
-}
-
-export type IffExprCstChildren = {
   unaryExpr: UnaryExprCstNode[];
-  Iff?: IToken[];
+  And?: IToken[];
 };
 
 export interface UnaryExprCstNode extends CstNode {
@@ -72,7 +72,7 @@ export type QuantifiedExprCstChildren = {
   Exists?: IToken[];
   quantVariables: QuantVariablesCstNode[];
   Colon: IToken[];
-  orExpr: OrExprCstNode[];
+  iffExpr: IffExprCstNode[];
 };
 
 export interface QuantVariablesCstNode extends CstNode {
@@ -93,7 +93,7 @@ export interface PrimaryCstNode extends CstNode {
 export type PrimaryCstChildren = {
   atom?: AtomCstNode[];
   LParen?: IToken[];
-  orExpr?: OrExprCstNode[];
+  iffExpr?: IffExprCstNode[];
   RParen?: IToken[];
 };
 
@@ -122,10 +122,10 @@ export type ArgumentCstChildren = {
 
 export interface ICstNodeVisitor<IN, OUT> extends ICstVisitor<IN, OUT> {
   query(children: QueryCstChildren, param?: IN): OUT;
+  iffExpr(children: IffExprCstChildren, param?: IN): OUT;
+  impliesExpr(children: ImpliesExprCstChildren, param?: IN): OUT;
   orExpr(children: OrExprCstChildren, param?: IN): OUT;
   andExpr(children: AndExprCstChildren, param?: IN): OUT;
-  impliesExpr(children: ImpliesExprCstChildren, param?: IN): OUT;
-  IffExpr(children: IffExprCstChildren, param?: IN): OUT;
   unaryExpr(children: UnaryExprCstChildren, param?: IN): OUT;
   quantifiedExpr(children: QuantifiedExprCstChildren, param?: IN): OUT;
   quantVariables(children: QuantVariablesCstChildren, param?: IN): OUT;

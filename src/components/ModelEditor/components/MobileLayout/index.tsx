@@ -211,9 +211,12 @@ const MobileLayout = ({
             <Visualization
               edges={visualization.edges}
               nodes={visualization.nodes}
-              onConnect={visualization.onConnect}
+              handleConnect={visualization.handleConnect}
               onEdgesChange={visualization.onEdgesChange}
               onNodesChange={visualization.onNodesChange}
+              handleAddNode={visualization.handleAddNode}
+              handleDeleteEdges={visualization.handleDeleteEdges}
+              handleDeleteNodes={visualization.handleDeleteNodes}
               fitViewTrigger={fitViewTrigger}
             />
             <div className={styles.mobileVisualizationButtons}>

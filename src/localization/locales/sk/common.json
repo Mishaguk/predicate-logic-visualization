@@ -26,7 +26,12 @@
     "runQuery": "Spustiť dotaz",
     "clearModel": "Vyčistiť model",
     "copy": "Kopírovať",
-    "downloadPl": "Stiahnuť .pl"
+    "downloadPl": "Stiahnuť .pl",
+    "addNode": "Pridať nový uzol",
+    "add": "Pridať",
+    "close": "Zavrieť",
+    "deleteEdge": "Odstrániť vybranú hranu",
+    "deleteNode": "Odstrániť vybraný uzol"
   },
   "prologExport": {
     "title": "Exportovaný PROLOG kód",
@@ -36,9 +41,20 @@
   },
   "placeholders": {
     "visualizationEmpty": "Tu sa zobrazí vizualizácia",
+    "nodeName": "Názov uzla",
+    "predicateName": "Názov predikátu",
     "noErrorsFound": "Neboli nájdené žiadne chyby.",
     "mobileCodeEditor": "Zástupný obsah editora kódu pre mobil",
     "mobileVisualization": "Zástupný obsah vizualizácie pre mobil"
+  },
+  "nodeErrors": {
+    "invalid": "Použite iba písmená, číslice alebo podčiarkovník.",
+    "duplicate": "Tento uzol už existuje."
+  },
+  "predicateErrors": {
+    "invalid": "Názov predikátu musí začínať písmenom alebo podčiarkovníkom.",
+    "duplicate": "Tento predikát už existuje.",
+    "unresolved": "Pripojený uzol nemá priradenú konštantu."
   },
   "examples": {
     "title": "Príklady",

@@ -60,11 +60,12 @@
   pointer-events: none;
 }
 
-.react-flow__handle {
+.constantNode :global(.react-flow__handle) {
   opacity: 0;
+  background: var(--button-primary-hover-bg);
   transition: opacity 0.2s;
 }
 
-.react-flow__node:hover .react-flow__handle {
+.constantNode:hover :global(.react-flow__handle) {
   opacity: 1;
 }

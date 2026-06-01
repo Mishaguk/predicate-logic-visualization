@@ -14,3 +14,5 @@ export { default as visualizationExample } from "./images/visualization-example.
 export { default as IconBook } from "./book.svg?react";
 export { default as IconSave } from "./save.svg?react";
 export { default as IconLoad } from "./load.svg?react";
+export { default as IconCross } from "./cross.svg?react";
+export { default as IconTrash } from "./trash.svg?react";

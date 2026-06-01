@@ -26,7 +26,12 @@
     "runQuery": "Run query",
     "clearModel": "Clear model",
     "copy": "Copy",
-    "downloadPl": "Download .pl"
+    "downloadPl": "Download .pl",
+    "addNode": "Add new node",
+    "add": "Add",
+    "close": "Close",
+    "deleteEdge": "Delete selected edge",
+    "deleteNode": "Delete selected node"
   },
   "prologExport": {
     "title": "Exported PROLOG Code",
@@ -36,9 +41,20 @@
   },
   "placeholders": {
     "visualizationEmpty": "Visualization will appear here",
+    "nodeName": "Node name",
+    "predicateName": "Predicate name",
     "noErrorsFound": "No errors were found.",
     "mobileCodeEditor": "Mobile code editor placeholder",
     "mobileVisualization": "Mobile visualization placeholder"
+  },
+  "nodeErrors": {
+    "invalid": "Use letters, digits or underscore only.",
+    "duplicate": "This node already exists."
+  },
+  "predicateErrors": {
+    "invalid": "Predicate name must start with a letter or underscore.",
+    "duplicate": "This predicate already exists.",
+    "unresolved": "A connected node has no constant mapping."
   },
   "examples": {
     "title": "Examples",

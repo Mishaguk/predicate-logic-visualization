@@ -6,15 +6,31 @@ import { useQueryExecutor } from "./useQueryExecutor";
 import { useGraphVisualization } from "./useGraphVisualization";
 import { serializeModelToProlog } from "./prolog";
 import {
-  addEdge,
   applyEdgeChanges,
   applyNodeChanges,
-  type Connection,
+  type Edge,
   type EdgeChange,
   type NodeChange,
 } from "@xyflow/react";
-import type { AnyVisualizationNode } from "../../types/visualization";
+import type {
+  AnyVisualizationNode,
+  PredicateEdgeData,
+} from "../../types/visualization";
 import type { ProjectFile } from "../../persistence/projectFile";
+import {
+  addUniverseMember,
+  removeUniverseMember,
+  type AddMemberResult,
+} from "../../dsl/universe/universe.edit";
+import {
+  addConstantMapping,
+  removeConstantMapping,
+} from "../../dsl/constants/constants.edit";
+import {
+  addPredicate,
+  removePredicate,
+  type AddPredicateResult,
+} from "../../dsl/predicates/predicates.edit";
 
 export const useModelEditor = () => {
   const code = useCodeState();
@@ -63,8 +79,7 @@ export const useModelEditor = () => {
   );
 
   const predicateNames = useMemo(
-    () =>
-      model ? [...new Set(model.predicates.map((p) => p.name))] : [],
+    () => (model ? [...new Set(model.predicates.map((p) => p.name))] : []),
     [model],
   );
 
@@ -89,9 +104,110 @@ export const useModelEditor = () => {
     [setEdges],
   );
 
-  const onConnect = useCallback(
-    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges],
+  const handleConnect = useCallback(
+    (source: string, target: string, name: string): AddPredicateResult => {
+      // Node ids are universe members; resolve each back to a constant name
+      // that points to it (predicates are written with constant names).
+      const memberToConstant = new Map<string, string>();
+      if (model) {
+        for (const [constName, member] of model.constants) {
+          if (!memberToConstant.has(member)) {
+            memberToConstant.set(member, constName);
+          }
+        }
+      }
+
+      const sourceConst = memberToConstant.get(source);
+      const targetConst = memberToConstant.get(target);
+      if (!sourceConst || !targetConst) {
+        return { ok: false, reason: "unresolved" };
+      }
+
+      // Connecting a node to itself is a self-loop → a unary predicate
+      // (e.g. Loves(ann)); otherwise source is always the first argument.
+      const args =
+        source === target ? [sourceConst] : [sourceConst, targetConst];
+      const result = addPredicate(code.predicatesCode, name, args);
+      if (result.ok) code.setPredicatesCode(result.code);
+      return result;
+    },
+    [code, model],
+  );
+
+  const handleDeleteEdges = useCallback(
+    (deleted: Edge[]) => {
+      // Each edge carries the predicate statement it was derived from; remove
+      // those from the buffer and let the graph re-derive without them.
+      // Functional update so it composes with node deletion when the Delete key
+      // removes a node and its connected edges in the same batch.
+      code.setPredicatesCode((prev) => {
+        let next = prev;
+        for (const edge of deleted) {
+          const predicate = (edge.data as PredicateEdgeData | undefined)
+            ?.predicate;
+          if (predicate) next = removePredicate(next, predicate.name, predicate.args);
+        }
+        return next;
+      });
+    },
+    [code],
+  );
+
+  const handleDeleteNodes = useCallback(
+    (deleted: AnyVisualizationNode[]) => {
+      if (!model) return;
+      // Node ids are universe members; only constant nodes map to one.
+      const members = new Set(
+        deleted.filter((node) => node.type === "constant").map((node) => node.id),
+      );
+      if (members.size === 0) return;
+
+      // Cascade: drop predicates referencing the member (by resolved arg),
+      // the constants pointing at it, then the universe member itself.
+      const predicatesToRemove = model.predicates.filter((predicate) =>
+        predicate.universeArgs.some((arg) => members.has(arg)),
+      );
+      const constantsToRemove = [...model.constants]
+        .filter(([, member]) => members.has(member))
+        .map(([name]) => name);
+
+      code.setPredicatesCode((prev) => {
+        let next = prev;
+        for (const predicate of predicatesToRemove) {
+          next = removePredicate(next, predicate.name, predicate.args);
+        }
+        return next;
+      });
+      code.setConstantsCode((prev) => {
+        let next = prev;
+        for (const name of constantsToRemove) {
+          next = removeConstantMapping(next, name);
+        }
+        return next;
+      });
+      code.setUniverseCode((prev) => {
+        let next = prev;
+        for (const member of members) {
+          next = removeUniverseMember(next, member);
+        }
+        return next;
+      });
+    },
+    [code, model],
+  );
+
+  const handleAddNode = useCallback(
+    (name: string): AddMemberResult => {
+      const result = addUniverseMember(code.universeCode, name);
+      if (result.ok) {
+        code.setUniverseCode(result.code);
+        code.setConstantsCode(
+          addConstantMapping(code.constantsCode, name.trim()),
+        );
+      }
+      return result;
+    },
+    [code],
   );
 
   const handleLoadProject = useCallback(
@@ -153,7 +269,10 @@ export const useModelEditor = () => {
       edges: graph.edges,
       onNodesChange,
       onEdgesChange,
-      onConnect,
+      handleConnect,
+      handleAddNode,
+      handleDeleteEdges,
+      handleDeleteNodes,
     },
   };
 };

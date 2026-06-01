@@ -3,6 +3,7 @@ import type {
   AnyVisualizationNode,
   ConstantNode,
   HyperEdgeNode,
+  PredicateEdgeData,
 } from "../../../types/visualization";
 import { MarkerType, type Edge } from "@xyflow/react";
 import type { Binding, Model, QueryResult } from "../../../types";
@@ -170,14 +171,18 @@ const computeEdges = (
     }
   });
 
-  model.predicates.forEach(({ name, universeArgs: args }) => {
-    if (args.length === 1) {
+  model.predicates.forEach(({ name, args: constArgs, universeArgs: args }) => {
+    // Carry the source statement so edge deletion can remove the predicate.
+    const data: PredicateEdgeData = { predicate: { name, args: constArgs } };
+
+    if (args.length === 1 || (args.length === 2 && args[0] === args[1])) {
       const node = args[0];
       edges.push({
         id: `${node}->${node}-${name}`,
         source: node,
         target: node,
         label: name,
+        data,
         ...edgeStyle,
         type: "selfConnecting",
       });
@@ -208,6 +213,7 @@ const computeEdges = (
         source,
         target,
         label: name,
+        data,
         sourceHandle: DEFAULT_SOURCE_HANDLE,
         targetHandle: useCycleLayout ? cycleHandle : DEFAULT_TARGET_HANDLE,
         ...edgeStyle,
@@ -228,6 +234,7 @@ const computeEdges = (
           id: `${arg}->${hub}-${i}`,
           source: arg,
           target: hub,
+          data,
           sourceHandle: DEFAULT_SOURCE_HANDLE,
           targetHandle,
           ...edgeStyle,

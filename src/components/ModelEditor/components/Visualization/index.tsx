@@ -10,18 +10,26 @@ import {
   type NodeChange,
   type Edge,
   Controls,
+  Panel,
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
 
 import SelfConnectingEdge from "./Edges/SelfConnectingEdge";
 
-import textStyles from "../../../../textStyles.module.css";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../../../context/theme/useTheme";
 import styles from "./index.module.css";
-import React, { useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import type { AnyVisualizationNode } from "../../../../types/visualization";
+import AddNode from "./AddNode";
+import AddEdge from "./AddEdge";
+import { IconTrash } from "../../../../assets";
+import type { AddMemberResult } from "../../../../dsl/universe/universe.edit";
+import type { AddPredicateResult } from "../../../../dsl/predicates/predicates.edit";
+import Button from "../../../Button";
+
+const DELETE_KEY_CODES = ["Delete", "Backspace"];
 
 const nodeTypes = {
   constant: ConstantNode,
@@ -37,7 +45,14 @@ type Props = {
   edges: Edge[];
   onNodesChange: (changes: NodeChange<AnyVisualizationNode>[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
-  onConnect: (params: Connection) => void;
+  handleConnect: (
+    source: string,
+    target: string,
+    name: string,
+  ) => AddPredicateResult;
+  handleAddNode: (name: string) => AddMemberResult;
+  handleDeleteEdges: (edges: Edge[]) => void;
+  handleDeleteNodes: (nodes: AnyVisualizationNode[]) => void;
   fitViewTrigger?: string | number;
 };
 
@@ -66,11 +81,23 @@ const Visualization = ({
   edges,
   onNodesChange,
   onEdgesChange,
-  onConnect,
+  handleConnect,
+  handleAddNode,
+  handleDeleteEdges,
+  handleDeleteNodes,
   fitViewTrigger,
 }: Props) => {
   const { t } = useTranslation("common");
   const { theme } = useTheme();
+
+  const selectedEdges = useMemo(
+    () => edges.filter((edge) => edge.selected),
+    [edges],
+  );
+  const selectedNodes = useMemo(
+    () => nodes.filter((node) => node.selected && node.type === "constant"),
+    [nodes],
+  );
 
   // Compute stable string keys from IDs only — positions don't affect these,
   // so drag events don't change nodeIdStr/edgeIdStr values and downstream
@@ -102,22 +129,16 @@ const Visualization = ({
     return `${graphKey}::${String(fitViewTrigger ?? "")}`;
   }, [graphKey, fitViewTrigger]);
 
-  if (!nodes.length && !edges.length) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexGrow: 1,
-        }}
-      >
-        <span className={textStyles.textBody} style={{ fontSize: "24px" }}>
-          {t("placeholders.visualizationEmpty")}
-        </span>
-      </div>
-    );
-  }
+  // Connecting two nodes opens a prompt (AddEdge) for the predicate name; the
+  // predicate flows back through the model rather than as a transient edge.
+  const [pendingConnection, setPendingConnection] = useState<Connection | null>(
+    null,
+  );
+  const onConnect = useCallback(
+    (params: Connection) => setPendingConnection(params),
+    [],
+  );
+  const clearConnection = useCallback(() => setPendingConnection(null), []);
 
   return (
     <ReactFlow
@@ -130,6 +151,9 @@ const Visualization = ({
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
+      onEdgesDelete={handleDeleteEdges}
+      onNodesDelete={handleDeleteNodes}
+      deleteKeyCode={DELETE_KEY_CODES}
       nodesDraggable
       nodesConnectable
       panOnDrag
@@ -139,7 +163,29 @@ const Visualization = ({
       }}
     >
       <AutoFitView fitKey={fitKey} />
+      <AddNode onAdd={handleAddNode} />
+      <AddEdge
+        connection={pendingConnection}
+        onSubmit={handleConnect}
+        onClose={clearConnection}
+      />
       <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
+      <Panel position="top-right">
+        {selectedNodes.length > 0 && (
+          <Button
+            text={t("actions.deleteNode")}
+            icon={IconTrash}
+            onClick={() => handleDeleteNodes(selectedNodes)}
+          />
+        )}
+        {selectedEdges.length > 0 && (
+          <Button
+            text={t("actions.deleteEdge")}
+            icon={IconTrash}
+            onClick={() => handleDeleteEdges(selectedEdges)}
+          />
+        )}
+      </Panel>
       <Controls position="bottom-right" />
     </ReactFlow>
   );

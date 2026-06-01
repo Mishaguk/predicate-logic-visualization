@@ -1,4 +1,4 @@
-import type { IToken } from "chevrotain";
+import type { IToken, TokenType } from "chevrotain";
 import {
   UniverseLexer,
   Identifier,
@@ -33,7 +33,7 @@ export const getUniverseMembers = (code: string): Set<string> => {
   return members;
 };
 
-const isType = (token: IToken, type: typeof Identifier): boolean =>
+const isType = (token: IToken, type: TokenType): boolean =>
   token.tokenType === type;
 
 /**

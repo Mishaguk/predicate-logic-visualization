@@ -40,7 +40,6 @@
     "copied": "Скопійовано!"
   },
   "placeholders": {
-    "visualizationEmpty": "Тут буде відображено візуалізацію",
     "nodeName": "Назва вузла",
     "predicateName": "Назва предиката",
     "noErrorsFound": "Помилок не знайдено.",

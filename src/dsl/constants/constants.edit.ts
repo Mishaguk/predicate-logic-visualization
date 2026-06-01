@@ -4,15 +4,13 @@ import { ConstantsLexer, Arrow, Semicolon } from "./constants.tokens";
 const STARTS_WITH_DIGIT = /^[0-9]/;
 
 /**
- * Derive a constant name for a universe member: the lowercased member, with an
+ * Derive a constant name for a universe member: the member verbatim, with an
  * "n" prefix when it starts with a digit. Constant names must start with a
  * letter or underscore (see constants grammar), so `0 -> 0` is invalid while
  * `n0 -> 0` is fine.
  */
-export const toConstantName = (member: string): string => {
-  const lower = member.toLowerCase();
-  return STARTS_WITH_DIGIT.test(lower) ? `n${lower}` : lower;
-};
+export const toConstantName = (member: string): string =>
+  STARTS_WITH_DIGIT.test(member) ? `n${member}` : member;
 
 /**
  * Append a `constName -> member` mapping to the constants-editor code. Skips

@@ -40,7 +40,6 @@
     "copied": "Copied!"
   },
   "placeholders": {
-    "visualizationEmpty": "Visualization will appear here",
     "nodeName": "Node name",
     "predicateName": "Predicate name",
     "noErrorsFound": "No errors were found.",
